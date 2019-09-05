@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование участка № {*allotment.id*}</title>
+    <style type="text/css">
+        tr.align-center td {
+            text-align: center;
+        }
+
+        /* Стили для свитчера "Статус владельца */
+        input.switcher_wide[type=checkbox] {
+            display: none;
+        }
+
+        input.switcher_wide[type=checkbox] + label {
+            display: inline-block;
+            background-color: #DB574D;
+            color: white;
+            font-family: sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            height: 30px;
+            line-height: 30px;
+            position: relative;
+            text-transform: uppercase;
+            width: 280px;
+        }
+
+        input.switcher_wide[type=checkbox] + label,
+        input.switcher_wide[type=checkbox] + label i {
+            -webkit-transition: all 200ms ease;
+            -moz-transition: all 200ms ease;
+            -o-transition: all 200ms ease;
+            transition: all 200ms ease;
+        }
+
+        input.switcher_wide[type=checkbox]:checked + label {
+            background-color: #67B04F;
+        }
+
+        input.switcher_wide[type=checkbox] + label:before,
+        input.switcher_wide[type=checkbox] + label:after,
+        input.switcher_wide[type=checkbox] + label i {
+            width: 50%;
+            display: inline-block;
+            height: 100%;
+            text-align: center;
+        }
+
+        input.switcher_wide[type=checkbox] + label:before {
+            content: attr(data-text-true);
+        }
+
+        input.switcher_wide[type=checkbox] + label:after {
+            content: attr(data-text-false);
+        }
+
+        input.switcher_wide[type=checkbox] + label i {
+            top: 10%;
+            background-color: white;
+            height: 80%;
+            left: 5%;
+            position: absolute;
+            width: 45%;
+        }
+
+        input.switcher_wide[type=checkbox]:checked + label i {
+            left: 50%;
+        }
+    </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".action-backward").on('click', function () {
+                document.location.href='/places/list';
+            });
+
+            $(".action-allotment-delete").on('click', function () {
+                if (prompt("Действительно удалить? Да/Нет")) {
+                    $.post('/places/callback_delete', {
+                        allotment_hidden_id: '{*allotment.id*}'
+                    });
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+<h2>Редактирование участка № {*allotment.id*}</h2>
+При редактировании участка изменять его очередь или номер нельзя. Только менять владельца. <br />
+<form method="post" action="/places/callback_edit">
+    <input type="hidden" name="allotment_hidden_id" value="{*allotment.id*}">
+    <table border="0" width="50%">
+        <tr>
+            <td>
+                Очередь
+            </td>
+            <td>
+                <input type="text" value="{allotment.pipeline}" disabled>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Номер участка
+            </td>
+            <td>
+                <input
+                        type="text"
+                        value="{*allotment.name*}"
+                        name="index"
+                        disabled
+                >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Ф.И.О. Владельца участка
+            </td>
+            <td>
+                <input
+                        type="text"
+                        name="owner"
+                        value="{*allotment.owner*}"
+                        placeholder="Ф.И.О. владельца участка"
+                        tabindex="2"
+                        required
+                >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Доступ
+            </td>
+            <td>
+                <input
+                        class="switcher_wide"
+                        id="checkbox_owner_status"
+                        type="checkbox" {?*allotment.status = 'ok'*}checked{?} tabindex="3">
+                <label for="checkbox_owner_status"
+                       data-text-true="РАЗРЕШЕН"
+                       data-text-false="ОГРАНИЧЕН"><i></i></label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr>
+            </td>
+        </tr>
+        <tr class="align-center">
+            <td>
+                <button class="action-backward" tabindex="6">НАЗАД</button>
+            </td>
+            <td>
+                <input type="submit" value="ОБНОВИТЬ ИНФОРМАЦИЮ" tabindex="5">
+                <br>
+                <button type="button" value="УДАЛИТЬ УЧАСТОК" class="action-allotment-delete"></button>
+            </td>
+        </tr>
+
+    </table>
+</form>
+
+</body>
+</html>
