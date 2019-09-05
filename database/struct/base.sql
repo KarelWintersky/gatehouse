@@ -38,6 +38,18 @@ CREATE UNIQUE INDEX `allotments_pipeline_and_index` USING BTREE ON allotments (`
 
 -- vehicles
 -- транспортные средства
+CREATE TABLE transport (
+    id INT NOT NULL AUTO_INCREMENT,
+    id_allotment INT NULL,
+    pass_unlimited TINYINT DEFAULT 0 NOT NULL,
+    pass_expiration DATE NULL,
+    `number` varchar(100) NULL,
+    temp_phone_number varchar(100) NULL,
+    CONSTRAINT transport_PK PRIMARY KEY (id)
+)
+ENGINE=InnoDB
+DEFAULT CHARSET=utf8
+COLLATE=utf8_general_ci;
 
 -- phones
 -- телефоны
