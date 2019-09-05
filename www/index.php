@@ -25,14 +25,14 @@ DB::init(NULL, [
 
 use Pecee\SimpleRouter\SimpleRouter;
 
-SimpleRouter::setDefaultNamespace('Gatehouse\Units');
+SimpleRouter::setDefaultNamespace('Gatehouse\Controllers');
 
 SimpleRouter::get('/', 'Page@page_welcome');
 
 SimpleRouter::group([
     'prefix'    =>  '/places'
 ], function (){
-    SimpleRouter::get('/list', 'Allotment@page_list');
+    SimpleRouter::get('/', 'Allotment@page_list');
     SimpleRouter::get('/add', 'Allotment@form_add');
     SimpleRouter::get('/edit', 'Allotment@form_edit');
     SimpleRouter::post('/callback_add', 'Allotment@callback_add');

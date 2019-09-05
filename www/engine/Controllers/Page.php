@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Gatehouse\Units;
+namespace Gatehouse\Controllers;
 
 
 use Arris\Template;
