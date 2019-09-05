@@ -1,0 +1,20 @@
+# --- Where: gatehouse.local @ example host
+
+# Paths #
+# все пути прописываются с финальным слэшем
+
+INSTALL_PATH    = "/var/www/gatehouse/"
+PATH_LOGS       = "logs/"
+
+# DB #
+# Основная база данных (вы же понимаете, что это фейковыйе данные?)
+
+DB_HOST         = "localhost"
+DB_PORT         = 3306
+DB_USER         = "root"
+DB_PASS         = "password"
+DB_NAME         = "gatehouse"
+
+# DEBUG SETTINGS #
+
+IS_DEBUG        = 1
