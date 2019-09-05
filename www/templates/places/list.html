@@ -7,31 +7,52 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(".action-allotment-add").on('click', function () {
-                document.location.href='/places/add';
+                window.location.href = '/places/add';
             });
             $(".action-allotment-edit").on('click', function () {
-                document.location.href='/places/edit?allotment_id'+$(this).data('allotment-id');
-            })
+                window.location.href = '/places/edit?id='+$(this).data('allotment-id');
+            });
+            $(".action-backward").on('click', function () {
+                window.location.href = '' + $(this).data('url');
+            });
         });
     </script>
+    <style type="text/css">
+        .align-center {
+            text-align: center;
+        }
+        .status_allowed {
+            color: #67B04F;
+        }
+        .status_restricted {
+            color: #DB574D;
+        }
+    </style>
 </head>
 <body>
+<button class="action-backward" data-url="/">НАЗАД</button>
 <button class="action-allotment-add">ДОБАВИТЬ</button>
-<table width="100%" border="1">
+<table width="70%" border="1">
     <tr>
-        <th>Очередь</th>
-        <th>Номер участка</th>
+        <th width="5%">Очередь</th>
+        <th width="10%">Номер участка</th>
         <th>ФИО Владельца</th>
-        <th colspan="2">Статус</th>
+        <th width="20%" colspan="2">Статус</th>
     </tr>
     {?*allotments_count*}
     {%*allotments_list*}
     <tr>
-        <td>{*allotments_list:pipeline*}</td>
-        <td>{*allotments_list:name*}</td>
+        <td class="align-center">{*allotments_list:pipeline*}</td>
+        <td class="align-center">{*allotments_list:name*}</td>
         <td>{*allotments_list:owner*}</td>
-        <td>{*allotments_list:status*}</td>
-        <th><button data-allotment-id="{*allotments_list:id*}" class="action-allotment-edit">Edit this</button></th>
+        <td class="align-center">
+            {?*allotments_list:status = "allowed"*}
+            <strong class="status_allowed">{*allotments_list:status*}</strong>
+            {?!}
+            <strong class="status_restricted">{*allotments_list:status*}</strong>
+            {?}
+        </td>
+        <th class="align-center"><button data-allotment-id="{*allotments_list:id*}" class="action-allotment-edit">Edit this</button></th>
     </tr>
     {%}
     {?}

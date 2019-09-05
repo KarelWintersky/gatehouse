@@ -73,14 +73,14 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(".action-backward").on('click', function () {
-                document.location.href='/places/list';
+                window.location.href = $(this).data('url');
+                return false;
             });
 
             $(".action-allotment-delete").on('click', function () {
-                if (prompt("Действительно удалить? Да/Нет")) {
-                    $.post('/places/callback_delete', {
-                        allotment_hidden_id: '{*allotment.id*}'
-                    });
+                if (confirm("Действительно удалить? Да/Нет")) {
+                    window.location.href = '/places/callback_delete?id=' + $('#allotment_hidden_id').val();
+                    return false;
                 }
             });
         });
@@ -88,16 +88,17 @@
 </head>
 <body>
 <h2>Редактирование участка № {*allotment.id*}</h2>
-При редактировании участка изменять его очередь или номер нельзя. Только менять владельца. <br />
+При редактировании участка изменять его очередь или номер нельзя. Только менять владельца.
+<hr>
 <form method="post" action="/places/callback_edit">
-    <input type="hidden" name="allotment_hidden_id" value="{*allotment.id*}">
+    <input type="hidden" name="allotment_hidden_id" value="{*allotment.id*}" id="allotment_hidden_id">
     <table border="0" width="50%">
         <tr>
             <td>
                 Очередь
             </td>
             <td>
-                <input type="text" value="{allotment.pipeline}" disabled>
+                <input type="text" value="{*allotment.pipeline*}" disabled>
             </td>
         </tr>
 
@@ -137,7 +138,11 @@
                 <input
                         class="switcher_wide"
                         id="checkbox_owner_status"
-                        type="checkbox" {?*allotment.status = 'ok'*}checked{?} tabindex="3">
+                        type="checkbox"
+                        {?*allotment.status="1"*} checked="checked" {?}
+                        tabindex="3"
+                        name="status"
+                >
                 <label for="checkbox_owner_status"
                        data-text-true="РАЗРЕШЕН"
                        data-text-false="ОГРАНИЧЕН"><i></i></label>
@@ -150,12 +155,12 @@
         </tr>
         <tr class="align-center">
             <td>
-                <button class="action-backward" tabindex="6">НАЗАД</button>
+                <button class="action-backward" tabindex="6" data-url="/places">К СПИСКУ УЧАСТКОВ</button>
             </td>
             <td>
                 <input type="submit" value="ОБНОВИТЬ ИНФОРМАЦИЮ" tabindex="5">
-                <br>
-                <button type="button" value="УДАЛИТЬ УЧАСТОК" class="action-allotment-delete"></button>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" value="УДАЛИТЬ УЧАСТОК" class="action-allotment-delete">УДАЛИТЬ</button>
             </td>
         </tr>
 

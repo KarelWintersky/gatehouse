@@ -73,7 +73,8 @@
     <script type="text/javascript">
         $(document).ready(function () {
             $(".action-backward").on('click', function () {
-                document.location.href='/places/list';
+                window.location.href = $(this).data('url');
+                return false;
             });
         });
     </script>
@@ -104,7 +105,7 @@
                         value=""
                         name="index"
                         placeholder="Номер участка (число < 10000)"
-                        pattern="[0-9]{,4}"
+                        pattern="/[0-9]{,4}/"
                         tabindex="2"
                         required
                 >
@@ -129,7 +130,7 @@
                 Доступ
             </td>
             <td>
-                <input class="switcher_wide" id="checkbox_owner_status" type="checkbox" tabindex="4">
+                <input name="status" class="switcher_wide" id="checkbox_owner_status" type="checkbox" tabindex="4">
                 <label for="checkbox_owner_status"
                        data-text-true="РАЗРЕШЕН"
                        data-text-false="ОГРАНИЧЕН"><i></i></label>
@@ -142,7 +143,7 @@
         </tr>
         <tr class="align-center">
             <td>
-                <button class="action-backward" tabindex="6">НАЗАД</button>
+                <button class="action-backward" data-url="/places" tabindex="6">НАЗАД</button>
             </td>
             <td>
                 <input type="submit" value="ДОБАВИТЬ УЧАСТОК" tabindex="5">

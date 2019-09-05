@@ -4,22 +4,20 @@
 namespace Gatehouse\Controllers;
 
 use Arris\Template;
-use function Arris\DBC as DBCAlias;
+use Gatehouse\Units\AllotmentUnit;
+use Gatehouse\Units\PipelinesUnit;
 
 class Allotment
 {
-    private $template;
-
     private $unit_instance;
 
     public function __construct()
     {
-        $this->unit_instance = new \Gatehouse\Units\Allotment();
+        $this->unit_instance = new AllotmentUnit();
     }
 
     public function __invoke()
     {
-        // TODO: Implement __invoke() method.
         return __METHOD__;
     }
 
@@ -41,6 +39,8 @@ class Allotment
 
     public function form_add()
     {
+        $selector_pipelines = (new PipelinesUnit())->getPipelines();
+
         $t = new Template('form_add.html', '$/templates/places');
         return $t->render();
     }
@@ -48,7 +48,7 @@ class Allotment
     public function form_edit()
     {
         $t = new Template('form_edit.html', '$/templates/places');
-        $allotment_id = intval($_REQUEST['allotment_id']);
+        $allotment_id = intval($_REQUEST['id']);
 
         $allotment_data = $this->unit_instance->get($allotment_id);
 
@@ -61,22 +61,43 @@ class Allotment
     public function callback_add()
     {
         $dataset = [
-
+            'pipeline'  =>  $_REQUEST['pipeline'],
+            'name'      =>  $_REQUEST['index'],
+            'owner'     =>  $_REQUEST['owner'],
+            'status'    =>  is_null(@$_REQUEST['status']) ? 'restricted' : 'allowed'
         ];
 
-        $this->unit_instance->insert($dataset);
+        $insert_status = $this->unit_instance->insert($dataset);
+
+        //@todo: if false - set SESSION value
 
         redirect('/places');
     }
 
     public function callback_edit()
     {
-        return __METHOD__;
+        $dataset = [
+            'id'        =>  $_REQUEST['allotment_hidden_id'],
+            'owner'     =>  $_REQUEST['owner'],
+            'status'    =>  is_null(@$_REQUEST['status']) ? 'restricted' : 'allowed'
+        ];
+
+        $update_status = $this->unit_instance->update($dataset);
+
+        //@todo: set session value
+
+        redirect('/places');
     }
 
     public function callback_delete()
     {
-        return __METHOD__;
+        $id = $_REQUEST['id'];
+
+        $delete_status = $this->unit_instance->delete($id);
+
+        //@todo: set session value
+
+        redirect('/places');
     }
 
 }

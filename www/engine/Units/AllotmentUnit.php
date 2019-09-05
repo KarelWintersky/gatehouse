@@ -109,5 +109,27 @@ WHERE `id` = :id
         return DBC()->lastInsertId();
     }
 
+    /**
+     * Удаляет по ID
+     *
+     * @param $id
+     * @return bool
+     */
+    public function delete($id)
+    {
+        $query = " DELETE FROM allotments WHERE id = :id ";
+
+        try {
+            $sth = DBC()->prepare($query);
+            $sth->execute([
+                'id'    =>  $id
+            ]);
+        } catch (\PDOException $e) {
+            dd($e);
+            return false;
+        }
+        return true;
+    }
+
 
 }

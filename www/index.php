@@ -37,7 +37,7 @@ SimpleRouter::group([
     SimpleRouter::get('/edit', 'Allotment@form_edit');
     SimpleRouter::post('/callback_add', 'Allotment@callback_add');
     SimpleRouter::post('/callback_edit', 'Allotment@callback_edit');
-    SimpleRouter::post('/callback_delete', 'Allotment@callback_delete');
+    SimpleRouter::get('/callback_delete', 'Allotment@callback_delete');
 });
 
 SimpleRouter::error(function (Pecee\Http\Request $request, \Exception $exception){
