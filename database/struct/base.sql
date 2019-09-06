@@ -64,7 +64,7 @@ CREATE TABLE phones (
     COLLATE=utf8_general_ci;
 CREATE FULLTEXT INDEX phones_phone_number_IDX ON phones (phone_number);
 CREATE INDEX phones_id_allotment_IDX USING BTREE ON phones (id_allotment);
-CREATE UNIQUE INDEX phones_id_allotment___phone USING BTREE ON gatehouse.phones (id_allotment,phone_number);
+CREATE UNIQUE INDEX phones_id_allotment___phone USING BTREE ON phones (id_allotment,phone_number);
 
 
 
