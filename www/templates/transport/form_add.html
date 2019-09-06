@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление транспортного средства</title>
+    <style type="text/css">
+        tr.align-center td {
+            text-align: center;
+        }
+
+        /* Стили для свитчера "Статус владельца */
+        input.switcher_wide[type=checkbox] {
+            display: none;
+        }
+
+        input.switcher_wide[type=checkbox] + label {
+            display: inline-block;
+            background-color: #DB574D;
+            color: white;
+            font-family: sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            height: 30px;
+            line-height: 30px;
+            position: relative;
+            text-transform: uppercase;
+            width: 280px;
+        }
+
+        input.switcher_wide[type=checkbox] + label,
+        input.switcher_wide[type=checkbox] + label i {
+            -webkit-transition: all 200ms ease;
+            -moz-transition: all 200ms ease;
+            -o-transition: all 200ms ease;
+            transition: all 200ms ease;
+        }
+
+        input.switcher_wide[type=checkbox]:checked + label {
+            background-color: #67B04F;
+        }
+
+        input.switcher_wide[type=checkbox] + label:before,
+        input.switcher_wide[type=checkbox] + label:after,
+        input.switcher_wide[type=checkbox] + label i {
+            width: 50%;
+            display: inline-block;
+            height: 100%;
+            text-align: center;
+        }
+
+        input.switcher_wide[type=checkbox] + label:before {
+            content: attr(data-text-true);
+        }
+
+        input.switcher_wide[type=checkbox] + label:after {
+            content: attr(data-text-false);
+        }
+
+        input.switcher_wide[type=checkbox] + label i {
+            top: 10%;
+            background-color: white;
+            height: 80%;
+            left: 5%;
+            position: absolute;
+            width: 45%;
+        }
+
+        input.switcher_wide[type=checkbox]:checked + label i {
+            left: 50%;
+        }
+    </style>
+    <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/frontend/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/frontend/scripts.js"></script>
+    <script type="text/javascript" src="/frontend/datepicker/jquery.datepicker.js"></script>
+    <link rel="stylesheet" media="screen" href="/frontend/jquery/jquery-ui.min.css">
+    <link rel="stylesheet" media="screen" href="/frontend/datepicker/jquery.datepicker.css" type="text/css" />
+    <script type="text/javascript">
+        var unlimited_status = true;
+        var now = new Date();
+        var eDay = (now.getDate() < 10) ? '0' + now.getDate() : now.getDate();
+        var eMonth = (now.getMonth() < 10) ? '0' + (1 + now.getMonth()) : (1 + now.getMonth());
+
+        $(document).ready(function () {
+            $("#actor-switch-unlimited-status").on('click', function () {
+                $("input[name='pass_expiration']").prop("disabled", !unlimited_status);
+                $(".ui-datepicker-trigger").prop("disabled", !unlimited_status);
+                unlimited_status = !unlimited_status;
+            });
+
+            $('#input-pass-expiration').datepicker({
+                dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+                monthNames: ['Янв', 'Февр', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноябрь', 'Дек'],
+                monthNamesShort: ['Янв', 'Февр', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноябрь', 'Дек'],
+                firstDay: 1,
+                dateFormat: 'yy-mm-dd',
+                showOn: 'both',
+                buttonText: "Выбрать дату",
+                changeMonth: true,
+                changeYear: true,
+                defaultDate: now.getFullYear() + '-' + eMonth + '-' + eDay,
+                minDate: "-20",
+                maxDate: "+3Y"
+            });
+            $(".ui-datepicker-trigger").prop("disabled", true);
+
+        });
+    </script>
+</head>
+<body>
+<h2>Добавление нового транспортного средства</h2>
+<form method="post" action="/transport/callback_add">
+    <table border="0" width="50%">
+        <tr>
+            <td>
+                Номер участка:
+            </td>
+            <td>
+                <select name="id_allotment" tabindex="1" autofocus>
+                    {%*select_allotments*}
+                    <option value="{*select_allotments:id*}">{*select_allotments:name*}</option>
+                    {%}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Номер транспортного средства:
+            </td>
+            <td>
+                <input type="text"
+                       value=""
+                       name="transport_number"
+                       placeholder="Номер транспортного средства"
+                       tabindex="2"
+                >
+            </td>
+        </tr>
+        <tr>
+            <td>Срок действия</td>
+            <td>
+                <label for="actor-switch-unlimited-status">
+                    Бессрочный
+                    <input type="checkbox"
+                           name="is_pass_unlimited"
+                           id="actor-switch-unlimited-status"
+                           checked="checked"
+                    >
+                </label>
+                <br>
+                <label for="input-pass-expiration" style="display: inline-block;">Истекает:</label>
+                <input type="text"
+                       class="datepicker"
+                       id="input-pass-expiration"
+                       name="pass_expiration"
+                       placeholder="Год/месяц/день"
+                       pattern="/([0-9]{4})-([0-9]{2})-([0-9]{2})/"
+                       value="2019-09-01"
+                       disabled
+                >
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Номер телефона регистрации<br> временного пропуска
+            </td>
+            <td>
+                <input type="text"
+                       name="phone_number_temp"
+                       placeholder="Номер телефона"
+                       value=""
+                       size="40"
+                >
+            </td>
+        </tr>
+        <tr class="align-center">
+            <td>
+                <button class="action-backward" data-url="/transport" tabindex="6">НАЗАД</button>
+            </td>
+            <td>
+                <input type="submit" value="ДОБАВИТЬ ТРАНСПОРТНОЕ СРЕДСТВО" tabindex="5">
+            </td>
+        </tr>
+
+    </table>
+</form>
+
+</body>
+</html>

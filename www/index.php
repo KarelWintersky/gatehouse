@@ -31,13 +31,24 @@ SimpleRouter::get('/', 'Page@page_welcome');
 
 SimpleRouter::group([
     'prefix'    =>  '/places'
-], function (){
+], function () {
     SimpleRouter::get('/', 'Allotment@page_list');
     SimpleRouter::get('/add', 'Allotment@form_add');
     SimpleRouter::get('/edit', 'Allotment@form_edit');
     SimpleRouter::post('/callback_add', 'Allotment@callback_add');
     SimpleRouter::post('/callback_edit', 'Allotment@callback_edit');
     SimpleRouter::get('/callback_delete', 'Allotment@callback_delete');
+});
+
+SimpleRouter::group([
+    'prefix'    =>  '/transport'
+], function () {
+    SimpleRouter::get('/', 'Transport@page_list');
+    SimpleRouter::get('/add', 'Transport@form_add');
+    SimpleRouter::get('/edit', 'Transport@form_edit');
+    SimpleRouter::post('/callback_add', 'Transport@callback_add');
+    SimpleRouter::post('/callback_edit', 'Transport@callback_edit');
+    SimpleRouter::get('/callback_delete', 'Transport@callback_delete');
 });
 
 SimpleRouter::error(function (Pecee\Http\Request $request, \Exception $exception){

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Список транспорта</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <link rel="stylesheet" href="/frontend/styles.css">
+    <script type="text/javascript">
+        var urls = {
+            'add':  '/transport/add',
+            'edit': '/transport/edit?id',
+            'list': '/transport'
+        };
+    </script>
+    <script type="text/javascript" src="/frontend/scripts.js"></script>
+    <style type="text/css"></style>
+</head>
+<body>
+<button class="action-list-back" data-url="/">НАЗАД</button>
+<button class="action-list-add">ДОБАВИТЬ</button>
+<table width="70%" border="1">
+    <tr>
+        <th>№ участка</th>
+        <th>№ транспортного средства</th>
+        <th>Срок действия</th>
+        <th>Номер телефона регистрации временного пропуска</th>
+        <th>Управление</th>
+        {* <th>Комментарий</th> *}
+    </tr>
+    {?*transport_count*}
+
+    {%*transport_list*}
+    <tr class="tr-td-align-center">
+        <td>{*transport_list:id_allotment*}</td>
+        <td>{*transport_list:number*}</td>
+        <td>
+            {?*transport_list:pass_unlimited = 1*}
+            <strong class="status_allowed">БЕССРОЧНЫЙ</strong>
+            {?!}
+            {*transport_list:pass_expiration*}
+            {?}
+        </td>
+        <td>
+            {?*transport_list:pass_unlimited = 1*}{?!}
+            {*transport_list:temp_phone_number*}
+            {?}
+        </td>
+        <td>
+            <button data-id="{*transport_list:id*}" class="action-list-edit">Edit this</button>
+        </td>
+        {* <td> </td> *}
+    </tr>
+    {%}
+
+    {?!}
+    <tr>
+        <td colspan="5">
+            Записей нет
+        </td>
+    </tr>
+    {?}
+</table>
+
+</body>
+</html>
