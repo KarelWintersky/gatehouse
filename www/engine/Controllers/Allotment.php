@@ -10,10 +10,14 @@ use Gatehouse\Units\PipelinesUnit;
 class Allotment
 {
     private $unit_instance;
+    private $template_path;
+    private $url_page_list;
 
     public function __construct()
     {
         $this->unit_instance = new AllotmentUnit();
+        $this->template_path = '$/templates/places';
+        $this->url_page_list = '/places';
     }
 
     public function __invoke()
@@ -27,7 +31,7 @@ class Allotment
 
     public function page_list()
     {
-        $t = new Template('list.html', '$/templates/places');
+        $t = new Template('list.html', $this->template_path);
 
         $allotments = $this->unit_instance->getAll();
 
@@ -41,13 +45,13 @@ class Allotment
     {
         $selector_pipelines = (new PipelinesUnit())->getPipelines();
 
-        $t = new Template('form_add.html', '$/templates/places');
+        $t = new Template('form_add.html', $this->template_path);
         return $t->render();
     }
 
     public function form_edit()
     {
-        $t = new Template('form_edit.html', '$/templates/places');
+        $t = new Template('form_edit.html', $this->template_path);
         $allotment_id = intval($_REQUEST['id']);
 
         $allotment_data = $this->unit_instance->get($allotment_id);
@@ -71,7 +75,7 @@ class Allotment
 
         //@todo: if false - set SESSION value
 
-        redirect('/places');
+        redirect($this->url_page_list);
     }
 
     public function callback_edit()
@@ -86,7 +90,7 @@ class Allotment
 
         //@todo: set session value
 
-        redirect('/places');
+        redirect($this->url_page_list);
     }
 
     public function callback_delete()
@@ -97,7 +101,7 @@ class Allotment
 
         //@todo: set session value
 
-        redirect('/places');
+        redirect($this->url_page_list);
     }
 
 }

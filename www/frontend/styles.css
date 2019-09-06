@@ -1,0 +1,9 @@
+.align-center {
+    text-align: center;
+}
+.status_allowed {
+    color: #67B04F;
+}
+.status_restricted {
+    color: #DB574D;
+}
