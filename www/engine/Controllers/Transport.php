@@ -39,8 +39,8 @@ class Transport
 
         $transport_list = $this->unit_instance->getAll();
 
-        $t->set('allotments_list', $transport_list);
-        $t->set('allotments_count', count($transport_list));
+        $t->set('transport_list', $transport_list);
+        $t->set('transport_count', count($transport_list));
 
         return $t->render();
     }

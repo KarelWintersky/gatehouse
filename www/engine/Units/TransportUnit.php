@@ -3,9 +3,10 @@
 
 namespace Gatehouse\Units;
 
+use Gatehouse\AbstractUnit;
 use function Arris\DBC;
 
-class TransportUnit
+class TransportUnit extends AbstractUnit
 {
 
     /**
@@ -50,7 +51,24 @@ class TransportUnit
      */
     public function insert(array $dataset)
     {
+        $query = "
+INSERT INTO transport 
+(`id_allotment`, `transport_number`, `pass_unlimited`, `pass_expiration`, `phone_number_temp`) VALUES
+(:id_allotment,  :transport_number,  :pass_unlimited,  :pass_expiration, :phone_number_temp)
+        ";
 
+        try {
+            $sth = DBC()->prepare($query);
+            $sth->execute($dataset);
+        } catch (\PDOException $e) {
+            if ($e->errorInfo[1] == self::MYSQL_ERROR_DUPLICATE_ENTRY) {
+                return NULL;
+            } else {
+                dd($e);
+            }
+        }
+
+        return DBC()->lastInsertId();
     }
 
     /**

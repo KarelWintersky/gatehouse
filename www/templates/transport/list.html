@@ -23,7 +23,7 @@
         <th>№ участка</th>
         <th>№ транспортного средства</th>
         <th>Срок действия</th>
-        <th>Номер телефона регистрации временного пропуска</th>
+        <th>Номер телефона регистрации <br> временного пропуска</th>
         <th>Управление</th>
         {* <th>Комментарий</th> *}
     </tr>
@@ -32,7 +32,7 @@
     {%*transport_list*}
     <tr class="tr-td-align-center">
         <td>{*transport_list:id_allotment*}</td>
-        <td>{*transport_list:number*}</td>
+        <td>{*transport_list:transport_number*}</td>
         <td>
             {?*transport_list:pass_unlimited = 1*}
             <strong class="status_allowed">БЕССРОЧНЫЙ</strong>
@@ -41,8 +41,8 @@
             {?}
         </td>
         <td>
-            {?*transport_list:pass_unlimited = 1*}{?!}
-            {*transport_list:temp_phone_number*}
+            {?*transport_list:pass_unlimited*}{?!}
+            {*transport_list:phone_number_temp*}
             {?}
         </td>
         <td>

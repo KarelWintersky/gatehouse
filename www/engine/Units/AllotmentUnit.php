@@ -3,12 +3,11 @@
 
 namespace Gatehouse\Units;
 
-
+use Gatehouse\AbstractUnit;
 use function Arris\DBC;
 
-class AllotmentUnit
+class AllotmentUnit extends AbstractUnit
 {
-    const MYSQL_ERROR_DUPLICATE_ENTRY = 1062;
     /**
      * Загружает список всех участков
      * @return array
