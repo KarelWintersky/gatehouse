@@ -7,67 +7,6 @@
         tr.align-center td {
             text-align: center;
         }
-
-        /* Стили для свитчера "Статус владельца */
-        input.switcher_wide[type=checkbox] {
-            display: none;
-        }
-
-        input.switcher_wide[type=checkbox] + label {
-            display: inline-block;
-            background-color: #DB574D;
-            color: white;
-            font-family: sans-serif;
-            font-size: 14px;
-            font-weight: bold;
-            height: 30px;
-            line-height: 30px;
-            position: relative;
-            text-transform: uppercase;
-            width: 280px;
-        }
-
-        input.switcher_wide[type=checkbox] + label,
-        input.switcher_wide[type=checkbox] + label i {
-            -webkit-transition: all 200ms ease;
-            -moz-transition: all 200ms ease;
-            -o-transition: all 200ms ease;
-            transition: all 200ms ease;
-        }
-
-        input.switcher_wide[type=checkbox]:checked + label {
-            background-color: #67B04F;
-        }
-
-        input.switcher_wide[type=checkbox] + label:before,
-        input.switcher_wide[type=checkbox] + label:after,
-        input.switcher_wide[type=checkbox] + label i {
-            width: 50%;
-            display: inline-block;
-            height: 100%;
-            text-align: center;
-        }
-
-        input.switcher_wide[type=checkbox] + label:before {
-            content: attr(data-text-true);
-        }
-
-        input.switcher_wide[type=checkbox] + label:after {
-            content: attr(data-text-false);
-        }
-
-        input.switcher_wide[type=checkbox] + label i {
-            top: 10%;
-            background-color: white;
-            height: 80%;
-            left: 5%;
-            position: absolute;
-            width: 45%;
-        }
-
-        input.switcher_wide[type=checkbox]:checked + label i {
-            left: 50%;
-        }
     </style>
     <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="/frontend/jquery/jquery-ui.min.js"></script>
@@ -76,10 +15,8 @@
     <link rel="stylesheet" media="screen" href="/frontend/jquery/jquery-ui.min.css">
     <link rel="stylesheet" media="screen" href="/frontend/datepicker/jquery.datepicker.css" type="text/css" />
     <script type="text/javascript">
-        var unlimited_status = true;
-        var now = new Date();
-        var eDay = (now.getDate() < 10) ? '0' + now.getDate() : now.getDate();
-        var eMonth = (now.getMonth() < 10) ? '0' + (1 + now.getMonth()) : (1 + now.getMonth());
+        var transport_id = {*transport.id*};
+        var unlimited_status = {?*transport.is_pass_unlimited*} true {?!} false {?};
 
         $(document).ready(function () {
             $("#actor-switch-unlimited-status").on('click', function () {
@@ -88,41 +25,28 @@
                 unlimited_status = !unlimited_status;
             });
 
-            $('#input-pass-expiration').datepicker({
-                dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-                monthNames: ['Янв', 'Февр', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноябрь', 'Дек'],
-                monthNamesShort: ['Янв', 'Февр', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноябрь', 'Дек'],
-                firstDay: 1,
-                dateFormat: 'yy-mm-dd',
-                showOn: 'both',
-                buttonText: "Выбрать дату",
-                changeMonth: true,
-                changeYear: true,
-                defaultDate: now.getFullYear() + '-' + eMonth + '-' + eDay,
-                minDate: "-20",
-                maxDate: "+3Y"
-            });
-            $(".ui-datepicker-trigger").prop("disabled", true);
+            $(".ui-datepicker-trigger").prop("disabled", unlimited_status);
 
+            $(".action-transport-delete").on('click', function () {
+                if (confirm("Действительно удалить? Да/Нет")) {
+                    window.location.href = '/transport/callback_delete?id=' + transport_id;
+                    return false;
+                }
+            });
         });
     </script>
 </head>
 <body>
 <h2>Редактирование транспортного средства № {*transport.transport_number*}</h2>
 <form method="post" action="/transport/callback_edit">
+    <input type="hidden" name="transport_hidden_id" value="{*transport.id*}" id="transport_hidden_id">
     <table border="0" width="50%">
         <tr>
             <td>
                 Номер участка:
             </td>
             <td>
-                {*
-                <select name="id_allotment" tabindex="1" autofocus>
-                    {%*select_allotments*}
-                    <option value="{*select_allotments:id*}">{*select_allotments:name*}</option>
-                    {%}
-                </select>
-                *}
+                <input type="text" value="{*transport.id_allotment*} ({*transport.pipeline_name*})" size="40" disabled>
             </td>
         </tr>
         <tr>
@@ -131,7 +55,7 @@
             </td>
             <td>
                 <input type="text"
-                       value=""
+                       value="{*transport.transport_number*}"
                        name="transport_number"
                        placeholder="Номер транспортного средства"
                        tabindex="2"
@@ -146,19 +70,19 @@
                     <input type="checkbox"
                            name="is_pass_unlimited"
                            id="actor-switch-unlimited-status"
-                           checked="checked"
+                           {?*transport.is_pass_unlimited*}checked="checked"{?}
                     >
                 </label>
                 <br>
                 <label for="input-pass-expiration" style="display: inline-block;">Истекает:</label>
                 <input type="text"
-                       class="datepicker"
+                       class="datepicker form-manage-datepicker"
                        id="input-pass-expiration"
                        name="pass_expiration"
                        placeholder="Год/месяц/день"
-                       pattern="/([0-9]{4})-([0-9]{2})-([0-9]{2})/"
-                       value="2019-09-01"
-                       disabled
+                       pattern="/[0-9]{4}\-[0-9]{2}\-[0-9]{2}/"
+                       value="{*transport.pass_expiration*}"
+                       {?*transport.is_pass_unlimited*}disabled{?}
                 >
             </td>
         </tr>
@@ -168,7 +92,7 @@
             </td>
             <td>
                 <input type="text"
-                       name="temp_phone_number"
+                       name="phone_number_temp"
                        placeholder="Номер телефона"
                        value=""
                        size="40"
@@ -180,7 +104,9 @@
                 <button class="action-backward" data-url="/transport" tabindex="6">НАЗАД</button>
             </td>
             <td>
-                <input type="submit" value="ДОБАВИТЬ ТРАНСПОРТНОЕ СРЕДСТВО" tabindex="5">
+                <input type="submit" value="ОТРЕДАКТИРОВАТЬ ТРАНСПОРТНОЕ СРЕДСТВО" tabindex="5">
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button type="button" value="УДАЛИТЬ ТРАНСПОРТНОЕ СРЕДСТВО" class="action-transport-delete">УДАЛИТЬ</button>
             </td>
         </tr>
 

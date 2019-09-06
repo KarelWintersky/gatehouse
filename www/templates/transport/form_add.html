@@ -76,10 +76,8 @@
     <link rel="stylesheet" media="screen" href="/frontend/jquery/jquery-ui.min.css">
     <link rel="stylesheet" media="screen" href="/frontend/datepicker/jquery.datepicker.css" type="text/css" />
     <script type="text/javascript">
+        var transport_id = -1;
         var unlimited_status = true;
-        var now = new Date();
-        var eDay = (now.getDate() < 10) ? '0' + now.getDate() : now.getDate();
-        var eMonth = (now.getMonth() < 10) ? '0' + (1 + now.getMonth()) : (1 + now.getMonth());
 
         $(document).ready(function () {
             $("#actor-switch-unlimited-status").on('click', function () {
@@ -88,22 +86,7 @@
                 unlimited_status = !unlimited_status;
             });
 
-            $('#input-pass-expiration').datepicker({
-                dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-                monthNames: ['Янв', 'Февр', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноябрь', 'Дек'],
-                monthNamesShort: ['Янв', 'Февр', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноябрь', 'Дек'],
-                firstDay: 1,
-                dateFormat: 'yy-mm-dd',
-                showOn: 'both',
-                buttonText: "Выбрать дату",
-                changeMonth: true,
-                changeYear: true,
-                defaultDate: now.getFullYear() + '-' + eMonth + '-' + eDay,
-                minDate: "-20",
-                maxDate: "+3Y"
-            });
-            $(".ui-datepicker-trigger").prop("disabled", true);
-
+            $(".ui-datepicker-trigger").prop("disabled", unlimited_status);
         });
     </script>
 </head>
@@ -148,7 +131,7 @@
                 <br><br>
                 <label for="input-pass-expiration" style="display: inline-block;">Истекает:</label>
                 <input type="text"
-                       class="datepicker"
+                       class="datepicker form-manage-datepicker"
                        id="input-pass-expiration"
                        name="pass_expiration"
                        placeholder="Год/месяц/день"

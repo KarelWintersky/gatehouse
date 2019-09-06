@@ -69,6 +69,8 @@ class Transport
 
         $transport_data = $this->unit_instance->get($id);
 
+        $t->set('select_allotments', (new AllotmentUnit())->getAllForSelector());
+
         $t->set('transport_id', $id);
         $t->set('transport', $transport_data);
 
@@ -98,9 +100,11 @@ class Transport
     public function callback_edit()
     {
         $dataset = [
-            'id'        =>  $_REQUEST['allotment_hidden_id'],
-            'owner'     =>  $_REQUEST['owner'],
-            'status'    =>  is_null(@$_REQUEST['status']) ? 'restricted' : 'allowed'
+            'id'                    =>  $_REQUEST['transport_hidden_id'],
+            'transport_number'      =>  $_REQUEST['transport_number'],
+            'pass_unlimited'        =>  is_null(@$_REQUEST['is_pass_unlimited']) ? 0 : 1,
+            'pass_expiration'       =>  $_REQUEST['pass_expiration'],
+            'phone_number_temp'     =>  $_REQUEST['phone_number_temp']
         ];
 
         $update_status = $this->unit_instance->update($dataset);

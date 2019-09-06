@@ -8,7 +8,7 @@
     <script type="text/javascript">
         var urls = {
             'add':  '/transport/add',
-            'edit': '/transport/edit?id',
+            'edit': '/transport/edit?id=',
             'list': '/transport'
         };
     </script>
@@ -41,7 +41,7 @@
             {?}
         </td>
         <td>
-            {?*transport_list:pass_unlimited*}{?!}
+            {?*transport_list:pass_unlimited*}не требуется{?!}
             {*transport_list:phone_number_temp*}
             {?}
         </td>

@@ -136,6 +136,7 @@ WHERE `id` = :id
      */
     public function getAllForSelector()
     {
+        //@todo: отрефакторить на выборку чисто данных (p.name AS pipeline_name)
         $query = " SELECT a.id AS id, CONCAT(a.name, ' (', p.name, ')') as name
 FROM allotments as a, pipelines as p
 WHERE a.pipeline = p.id
