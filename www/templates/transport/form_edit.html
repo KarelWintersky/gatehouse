@@ -19,6 +19,21 @@
         var unlimited_status = {?*transport.is_pass_unlimited*} true {?!} false {?};
 
         $(document).ready(function () {
+            $(".form-manage-datepicker").datepicker({
+                dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
+                monthNames: ['Янв', 'Февр', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноябрь', 'Дек'],
+                monthNamesShort: ['Янв', 'Февр', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноябрь', 'Дек'],
+                firstDay: 1,
+                dateFormat: 'yy-mm-dd',
+                showOn: 'both',
+                buttonText: "Выбрать дату",
+                changeMonth: true,
+                changeYear: true,
+                defaultDate: now.getFullYear() + '-' + eMonth + '-' + eDay,
+                minDate: "-20",
+                maxDate: "+3Y"
+            });
+
             $("#actor-switch-unlimited-status").on('click', function () {
                 $("input[name='pass_expiration']").prop("disabled", !unlimited_status);
                 $(".ui-datepicker-trigger").prop("disabled", !unlimited_status);

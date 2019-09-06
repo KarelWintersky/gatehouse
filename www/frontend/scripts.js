@@ -22,19 +22,4 @@ $(document).ready(function () {
         window.location.href = $(this).data('url');
         return false;
     });
-
-    $(".form-manage-datepicker").datepicker({
-        dayNamesMin: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
-        monthNames: ['Янв', 'Февр', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноябрь', 'Дек'],
-        monthNamesShort: ['Янв', 'Февр', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Авг', 'Сент', 'Окт', 'Ноябрь', 'Дек'],
-        firstDay: 1,
-        dateFormat: 'yy-mm-dd',
-        showOn: 'both',
-        buttonText: "Выбрать дату",
-        changeMonth: true,
-        changeYear: true,
-        defaultDate: now.getFullYear() + '-' + eMonth + '-' + eDay,
-        minDate: "-20",
-        maxDate: "+3Y"
-    });
 });
