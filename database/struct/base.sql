@@ -43,8 +43,8 @@ CREATE TABLE transport (
     id_allotment INT NULL,
     pass_unlimited TINYINT DEFAULT 0 NOT NULL,
     pass_expiration DATE NULL,
-    `number` varchar(100) NULL,
-    temp_phone_number varchar(100) NULL,
+    transport_number varchar(100) NULL,
+    phone_number_temp varchar(100) NULL,
     CONSTRAINT transport_PK PRIMARY KEY (id)
 )
 ENGINE=InnoDB
