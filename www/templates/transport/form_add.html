@@ -139,22 +139,20 @@
         <tr>
             <td>Срок действия</td>
             <td>
-                <label for="actor-switch-unlimited-status">
-                    Бессрочный
-                    <input type="checkbox"
-                           name="is_pass_unlimited"
-                           id="actor-switch-unlimited-status"
-                           checked="checked"
-                    >
-                </label>
-                <br>
+                <input type="checkbox"
+                       name="is_pass_unlimited"
+                       id="actor-switch-unlimited-status"
+                       checked="checked"
+                >
+                <label for="actor-switch-unlimited-status">Бессрочный</label>
+                <br><br>
                 <label for="input-pass-expiration" style="display: inline-block;">Истекает:</label>
                 <input type="text"
                        class="datepicker"
                        id="input-pass-expiration"
                        name="pass_expiration"
                        placeholder="Год/месяц/день"
-                       pattern="/([0-9]{4})-([0-9]{2})-([0-9]{2})/"
+                       pattern="/[0-9]{4}\-[0-9]{2}\-[0-9]{2}/"
                        value="2019-09-01"
                        disabled
                 >
