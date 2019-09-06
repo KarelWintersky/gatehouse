@@ -131,5 +131,27 @@ WHERE `id` = :id
         return true;
     }
 
+    /**
+     * Возвращает список участков для селектора
+     * @return array
+     */
+    public function getAllForSelector()
+    {
+        $query = " SELECT a.id AS id, CONCAT(a.name, ' (', p.name, ')') as name
+FROM allotments as a, pipelines as p
+WHERE a.pipeline = p.id
+ORDER BY a.pipeline, a.name ";
+
+        $list = [];
+        try {
+            $sth = DBC()->query($query);
+            $list = $sth->fetchAll();
+        } catch (\PDOException $e) {
+            dd($e);
+        }
+
+        return $list;
+    }
+
 
 }

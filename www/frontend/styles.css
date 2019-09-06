@@ -1,6 +1,9 @@
 .align-center {
     text-align: center;
 }
+.tr-td-align-center td {
+    text-align: center;
+}
 .status_allowed {
     color: #67B04F;
 }
