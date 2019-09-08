@@ -29,7 +29,8 @@ use Pecee\SimpleRouter\SimpleRouter;
 try {
     SimpleRouter::setDefaultNamespace('Gatehouse\Controllers');
 
-    SimpleRouter::get('/', 'Page@page_welcome');
+    SimpleRouter::get('/', 'Allotment@page_list');
+    SimpleRouter::get('/service', 'Page@page_services');
 
     SimpleRouter::group(['prefix' => '/ajax'], function (){
         SimpleRouter::get('/add_phone', 'Ajax@action_phone_add');
@@ -38,6 +39,8 @@ try {
         SimpleRouter::get('/add_transport', 'Ajax@action_transport_add');
         SimpleRouter::get('/delete_transport', 'Ajax@action_transport_delete');
     });
+
+
 
     SimpleRouter::group([
         'prefix'    =>  '/places'

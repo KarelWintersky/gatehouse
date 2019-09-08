@@ -2,14 +2,19 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Редактирование участка № {*allotment.id*}</title>
+    <title>Управление доступом к участку № {*allotment.id*}</title>
     <link rel="stylesheet" href="/frontend/styles.css">
+
     {* + ../_favicons.html *}
+
     <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="/templates/places/places_manage.js"></script>
+    <script type="text/javascript" src="/frontend/scripts.js"></script>
+    <script type="text/javascript" src="/frontend/places_manage.js"></script>
 </head>
 <body>
-<button class="action-backward" tabindex="6" data-url="/places">К СПИСКУ УЧАСТКОВ</button>
+<button data-url="/" style="float: left" class="action-goto-url xlarge">К СПИСКУ УЧАСТКОВ</button>
+<button data-url="/places/edit?id={*allotment.id*}" style="float: right" class="action-goto-url xlarge">РЕДАКТИРОВАТЬ</button>
+<hr style="clear: both;">
 <input type="hidden" name="allotment_hidden_id" value="{*allotment.id*}" id="allotment_hidden_id">
 <table border="0" width="100%">
     <tr>
@@ -38,17 +43,11 @@
                         Доступ к участку
                     </td>
                     <td>
-                        <input
-                                class="switcher_owner_status"
-                                id="checkbox_owner_status"
-                                type="checkbox"
-                                {?*allotment.status="1"*} checked="checked" {?}
-                                tabindex="3"
-                                name="status"
-                        >
-                        <label for="checkbox_owner_status"
-                               data-text-true="РАЗРЕШЕН"
-                               data-text-false="ОГРАНИЧЕН"><i></i></label>
+                        {?*allotment.status="1"*}
+                        <span class="block_owner_status block_owner_status_allowed">РАЗРЕШЕН</span>
+                        {?!}
+                        <span class="block_owner_status block_owner_status_restricted">ОГРАНИЧЕН</span>
+                        {?}
                     </td>
                 </tr>
             </table>

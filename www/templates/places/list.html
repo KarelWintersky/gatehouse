@@ -18,22 +18,26 @@
         });
     </script>
     <script type="text/javascript" src="/frontend/scripts.js"></script>
-    <style type="text/css"></style>
+    <style>
+
+    </style>
 </head>
 <body>
-<button class="action-list-back" data-url="/">НАЗАД</button>
-<button class="action-list-add">ДОБАВИТЬ</button>
-<table width="80%" border="1">
+
+<button style="float: left" class="xlarge action-goto-url" data-url="/places/add">ДОБАВИТЬ<br>УЧАСТОК</button>
+<button style="float: right" class="xlarge action-goto-url" id="actor-to-transport" data-url="/service">ДРУГИЕ <br>ДЕЙСТВИЯ</button>
+
+<table width="100%" border="1">
     <tr>
-        <th width="5%">Очередь</th>
+        <th height="40" width="5%">Очередь</th>
         <th width="10%">Номер участка</th>
         <th>ФИО Владельца</th>
-        <th width="20%" colspan="2">Статус</th>
+        <th width="30%" colspan="2">Статус</th>
     </tr>
     {?*allotments_count*}
     {%*allotments_list*}
     <tr>
-        <td class="align-center">{*allotments_list:pipeline*}</td>
+        <td height="50" class="align-center">{*allotments_list:pipeline*}</td>
         <td class="align-center">{*allotments_list:name*}</td>
         <td>{*allotments_list:owner*}</td>
         <td class="align-center">
@@ -44,9 +48,7 @@
             {?}
         </td>
         <th class="align-center">
-            <button data-id="{*allotments_list:id*}" class="action-list-edit">Редактировать участок</button>
-            <hr>
-            <button data-id="{*allotments_list:id*}" class="action-list-manage">Настроить права доступа</button>
+            <button data-id="{*allotments_list:id*}" class="action-list-manage xlarge">ДОСТУП</button>
         </th>
     </tr>
     {%}

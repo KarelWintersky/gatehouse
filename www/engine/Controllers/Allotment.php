@@ -19,7 +19,7 @@ class Allotment
     {
         $this->unit_instance = new AllotmentUnit();
         $this->template_path = '$/templates/places';
-        $this->url_page_list = '/places';
+        $this->url_page_list = '/';
     }
 
     public function __invoke()
@@ -115,7 +115,7 @@ class Allotment
 
         //@todo: if false - set SESSION value
 
-        redirect($this->url_page_list);
+        redirect('/');
     }
 
     public function callback_edit()
@@ -130,7 +130,7 @@ class Allotment
 
         //@todo: set session value
 
-        redirect($this->url_page_list);
+        redirect('/places/manage?id=' . $dataset['id']);
     }
 
     public function callback_delete()

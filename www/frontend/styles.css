@@ -33,6 +33,33 @@ li input:disabled:not(:placeholder-shown) {
     color: red;
 }
 
+/* Разрешен/запрещен доступ на странице управления доступом к участку */
+.block_owner_status {
+    display: inline-block;
+    color: white;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    text-transform: uppercase;
+    width: 200px;
+    text-align: center;
+}
+.block_owner_status_restricted {
+    background-color: #DB574D;
+}
+.block_owner_status_allowed {
+    background-color: #67B04F;
+}
+
+/* Buttons */
+button.xlarge {
+    font-size: x-large;
+    height: 80px;
+}
+
 /* Стили для свитчера "Статус владельца */
 input.switcher_owner_status[type=checkbox] {
     display: none;
