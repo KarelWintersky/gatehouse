@@ -8,21 +8,23 @@ WWW_ROOT = /var/www/$(PROJECT)/www
 help:   ##@help Help
 	@perl -e '$(HELP_ACTION)' $(MAKEFILE_LIST)
 
-update:         ##@build Update project from GIT and build version file
+update:         ##@update Update project from GIT and build version file
 	@echo Updating project from GIT
 	@git pull
 	@echo Updating version file...
 	@git log --oneline --format=%B -n 1 HEAD | head -n 1 > ./www/.version
 	@git log --oneline --format="%at" -n 1 HEAD | xargs -I{} date -d @{} +%Y-%m-%d >> ./www/.version
 	@git rev-parse --short HEAD >> ./www/.version
-	@cd www/ && composer install && rm composer.json && rm composer.lock
+#	@cd www/ && composer install && rm composer.json && rm composer.lock
 	@chown www-data:www-data -R *
 	@echo Updated.
+
+build:          ##build Build DEB package
+	@cd www/ && composer install && rm composer.json && rm composer.lock
 
 install:		##install Install project to working directory
 	install -d $(VAR_ROOT)
 	cp -r www $(VAR_ROOT)
-
 
 
 # ------------------------------------------------
