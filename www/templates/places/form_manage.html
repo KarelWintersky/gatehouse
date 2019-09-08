@@ -67,7 +67,7 @@
                 <li>
                     <label for="input-add-phone">
                         <input type="text"
-                               width="40"
+                               size="20"
                                placeholder="Телефон"
                                id="input-add-phone">
                         <button id="actor-add-phone">Добавить</button>
@@ -75,11 +75,10 @@
                 </li>
                 {%*phones*}
                 <li data-id="{*phones:id*}">
-                    <input type="text" width="40" data-id="{*phones:id*}" value="{*phones:phone_number*}" disabled>
+                    <input type="text" size="18" data-id="{*phones:id*}" value="{*phones:phone_number*}" disabled>
                     <button class="action-delete-phone" data-id="{*phones:id*}">DELETE</button>
                 </li>
                 {%}
-
             </ul>
 
         </td>
@@ -102,10 +101,21 @@
                 </li>
                 {%}
             </ul>
-
-
         </td>
         <td width="30%">
+            <ul class="bulletless">
+                {?* transport_temporary^COUNT *}
+
+                {%*transport_temporary*}
+                <li>
+                    <input type="text" width="40" disabled value="{*transport_temporary:transport_number*}">
+                    <input type="text" width="20" disabled value="{*transport_temporary:pass_expiration*}">
+                </li>
+                {%}
+                {?!}
+                Записей нет
+                {?}
+            </ul>
             <!-- список временных пропусков (просто для справки) -->
         </td>
     </tr>

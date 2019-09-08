@@ -39,15 +39,27 @@ class Allotment
     {
         $t = new Template('form_manage.html', $this->template_path);
         $id = intval($_REQUEST['id']);
+
         $data_allotment = $this->unit_instance->get($id);
         $data_phones = (new PhoneUnit())->getAll();
         $data_transport = (new TransportUnit())->getAll();
 
         // разделяем $data_transport на два массива по признаку
+        $data_transport_permanent = [];
+        $data_transport_temporary = [];
+
+        foreach ($data_transport as $key => $value) {
+            if ($value['pass_unlimited'] == 1) {
+                $data_transport_permanent[] = $value;
+            } else {
+                $data_transport_temporary[] = $value;
+            }
+        }
 
         $t->set('allotment', $data_allotment);
         $t->set('phones', $data_phones);
-        $t->set('transport_permanent', $data_transport);
+        $t->set('transport_permanent', $data_transport_permanent);
+        $t->set('transport_temporary', $data_transport_temporary);
 
         return $t->render();
     }

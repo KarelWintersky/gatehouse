@@ -23,7 +23,7 @@
     list-style-type: none;
 }
 
-#container-phones, #container-transport li {
+#container-phones li, #container-transport li {
     margin: 5px 0 5px 0;
 }
 
