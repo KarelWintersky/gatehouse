@@ -7,6 +7,7 @@ require_once __DIR__ . '/vendor/autoload.php';
 require_once __DIR__ . '/vendor/pecee/simple-router/helpers.php';
 require_once __DIR__ . '/engine/websun.php';
 require_once __DIR__ . '/engine/Template.php';
+require_once __DIR__ . '/engine/functions.php';
 
 $dotenv = \Dotenv\Dotenv::create(__DIR__, '_env');
 $dotenv->load();
@@ -25,40 +26,51 @@ DB::init(NULL, [
 
 use Pecee\SimpleRouter\SimpleRouter;
 
-SimpleRouter::setDefaultNamespace('Gatehouse\Controllers');
+try {
+    SimpleRouter::setDefaultNamespace('Gatehouse\Controllers');
 
-SimpleRouter::get('/', 'Page@page_welcome');
+    SimpleRouter::get('/', 'Page@page_welcome');
 
-SimpleRouter::group([
-    'prefix'    =>  '/places'
-], function () {
-    SimpleRouter::get('/', 'Allotment@page_list');
-    SimpleRouter::get('/add', 'Allotment@form_add');
-    SimpleRouter::get('/edit', 'Allotment@form_edit');
+    SimpleRouter::group([
+        'prefix'    =>  '/places'
+    ], function () {
+        SimpleRouter::get('/', 'Allotment@page_list');
+        SimpleRouter::get('/add', 'Allotment@form_add');
+        SimpleRouter::get('/edit', 'Allotment@form_edit');
 
-    SimpleRouter::get('/manage', 'Allotments@form_manage');
+        SimpleRouter::get('/manage', 'Allotment@form_manage');
 
-    SimpleRouter::post('/callback_add', 'Allotment@callback_add');
-    SimpleRouter::post('/callback_edit', 'Allotment@callback_edit');
-    SimpleRouter::get('/callback_delete', 'Allotment@callback_delete');
-});
+        SimpleRouter::post('/callback_add', 'Allotment@callback_add');
+        SimpleRouter::post('/callback_edit', 'Allotment@callback_edit');
+        SimpleRouter::get('/callback_delete', 'Allotment@callback_delete');
+    });
 
-SimpleRouter::group([
-    'prefix'    =>  '/transport'
-], function () {
-    SimpleRouter::get('/', 'Transport@page_list');
-    SimpleRouter::get('/add', 'Transport@form_add');
-    SimpleRouter::get('/edit', 'Transport@form_edit');
-    SimpleRouter::post('/callback_add', 'Transport@callback_add');
-    SimpleRouter::post('/callback_edit', 'Transport@callback_edit');
-    SimpleRouter::get('/callback_delete', 'Transport@callback_delete');
-});
+    SimpleRouter::group([
+        'prefix'    =>  '/transport'
+    ], function () {
+        SimpleRouter::get('/', 'Transport@page_list');
+        SimpleRouter::get('/add', 'Transport@form_add');
+        SimpleRouter::get('/edit', 'Transport@form_edit');
+        SimpleRouter::post('/callback_add', 'Transport@callback_add');
+        SimpleRouter::post('/callback_edit', 'Transport@callback_edit');
+        SimpleRouter::get('/callback_delete', 'Transport@callback_delete');
+    });
 
-SimpleRouter::error(function (Pecee\Http\Request $request, \Exception $exception){
-    d($exception);
-    d($request);
-    dd('');
-});
+/*    SimpleRouter::error(function (Pecee\Http\Request $request, \Exception $exception){
+        d($exception);
+        d($request);
+        dd('');
+    });*/
 
-SimpleRouter::start();
+    SimpleRouter::start();
+
+} catch (\Exception $exception) {
+    if ($exception->getCode() === 404) {
+        http_redirect('/404.html');
+    } else {
+        d($exception);
+        dd('');
+    }
+}
+
 

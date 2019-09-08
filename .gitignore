@@ -1,4 +1,5 @@
+.idea
+_temp
 www/vendor
 www/_env
 www/composer.lock
-_temp

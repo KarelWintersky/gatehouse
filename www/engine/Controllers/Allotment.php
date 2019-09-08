@@ -5,8 +5,8 @@ namespace Gatehouse\Controllers;
 
 use Arris\Template;
 use Gatehouse\Units\AllotmentUnit;
-use Gatehouse\Units\PhonesUnit;
-use Gatehouse\Units\PipelinesUnit;
+use Gatehouse\Units\PhoneUnit;
+use Gatehouse\Units\PipelineUnit;
 use Gatehouse\Units\TransportUnit;
 
 class Allotment
@@ -30,12 +30,17 @@ class Allotment
     /**
      * ==========================================
      */
-    public function page_manage()
+    /**
+     * Форма основного функционала
+     *
+     * @return mixed|string|null
+     */
+    public function form_manage()
     {
-        $t = new Template('manage.html', $this->template_path);
+        $t = new Template('form_manage.html', $this->template_path);
         $id = intval($_REQUEST['id']);
         $data_allotment = $this->unit_instance->get($id);
-        $data_phones = (new PhonesUnit())->getAll();
+        $data_phones = (new PhoneUnit())->getAll();
         $data_transport = (new TransportUnit())->getAll();
 
         $t->set('allotment', $data_allotment);
@@ -45,8 +50,11 @@ class Allotment
         return $t->render();
     }
 
-
-
+    /**
+     * Форма списка участков
+     *
+     * @return mixed|string|null
+     */
     public function page_list()
     {
         $t = new Template('list.html', $this->template_path);
@@ -61,7 +69,7 @@ class Allotment
 
     public function form_add()
     {
-        $selector_pipelines = (new PipelinesUnit())->getPipelines();
+        $selector_pipelines = (new PipelineUnit())->getPipelines();
 
         $t = new Template('form_add.html', $this->template_path);
         return $t->render();

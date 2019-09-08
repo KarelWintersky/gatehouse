@@ -5,7 +5,7 @@ namespace Gatehouse\Units;
 
 use function Arris\DBC;
 
-class PipelinesUnit
+class PipelineUnit
 {
     /**
      * Загружает список очередей застройки

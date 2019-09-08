@@ -23,10 +23,11 @@
       "ext-pdo": "*",
       "ext-xml": "*",
       "ext-zip": "*",
-        "vlucas/phpdotenv": "^3.5",
-        "monolog/monolog": "^1.24",
-        "karelwintersky/arris": "^1.22",
-        "pecee/simple-router": "4.2.0.6"
+      "ext-http": "*",
+      "vlucas/phpdotenv": "^3.5",
+      "monolog/monolog": "^1.24",
+      "karelwintersky/arris": "^1.22",
+      "pecee/simple-router": "4.2.0.6"
     },
     "autoload": {
       "psr-4": {

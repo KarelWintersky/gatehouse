@@ -23,8 +23,7 @@
     </script>
 </head>
 <body>
-<h2>Редактирование участка № {*allotment.id*}</h2>
-При редактировании участка изменять его очередь или номер нельзя. Только менять владельца.
+<h2>Участок № {*allotment.id*}</h2>
 <hr>
 <form method="post" action="/places/callback_edit">
     <input type="hidden" name="allotment_hidden_id" value="{*allotment.id*}" id="allotment_hidden_id">
@@ -34,7 +33,7 @@
                 Очередь
             </td>
             <td>
-                <input type="text" value="{*allotment.pipeline*}" disabled>
+                <strong>{*allotment.pipeline*}</strong>
             </td>
         </tr>
 
@@ -43,12 +42,7 @@
                 Номер участка
             </td>
             <td>
-                <input
-                        type="text"
-                        value="{*allotment.name*}"
-                        name="index"
-                        disabled
-                >
+                <strong>{*allotment.name*}</strong>
             </td>
         </tr>
         <tr>
@@ -56,14 +50,7 @@
                 Ф.И.О. Владельца участка
             </td>
             <td>
-                <input
-                        type="text"
-                        name="owner"
-                        value="{*allotment.owner*}"
-                        placeholder="Ф.И.О. владельца участка"
-                        tabindex="2"
-                        required
-                >
+                <strong>{*allotment.owner*}</strong>
             </td>
         </tr>
         <tr>
