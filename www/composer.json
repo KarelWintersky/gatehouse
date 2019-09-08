@@ -23,7 +23,6 @@
       "ext-pdo": "*",
       "ext-xml": "*",
       "ext-zip": "*",
-      "ext-http": "*",
       "vlucas/phpdotenv": "^3.5",
       "monolog/monolog": "^1.24",
       "karelwintersky/arris": "^1.22",
