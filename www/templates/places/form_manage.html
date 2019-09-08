@@ -4,91 +4,114 @@
     <meta charset="UTF-8">
     <title>Редактирование участка № {*allotment.id*}</title>
     <link rel="stylesheet" href="/frontend/styles.css">
-
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $(".action-backward").on('click', function () {
-                window.location.href = $(this).data('url');
-                return false;
-            });
-
-            $(".action-allotment-delete").on('click', function () {
-                if (confirm("Действительно удалить? Да/Нет")) {
-                    window.location.href = '/places/callback_delete?id=' + $('#allotment_hidden_id').val();
-                    return false;
-                }
-            });
-        });
-    </script>
+    {* + ../_favicons.html *}
+    <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/templates/places/places_manage.js"></script>
 </head>
 <body>
-<h2>Участок № {*allotment.id*}</h2>
-<hr>
-<form method="post" action="/places/callback_edit">
-    <input type="hidden" name="allotment_hidden_id" value="{*allotment.id*}" id="allotment_hidden_id">
-    <table border="0" width="50%">
-        <tr>
-            <td>
-                Очередь
-            </td>
-            <td>
-                <strong>{*allotment.pipeline*}</strong>
-            </td>
-        </tr>
+<button class="action-backward" tabindex="6" data-url="/places">К СПИСКУ УЧАСТКОВ</button>
+<input type="hidden" name="allotment_hidden_id" value="{*allotment.id*}" id="allotment_hidden_id">
+<table border="1" width="100%">
+    <tr>
+        <td colspan="3"  style="font-size: large">
+            <!-- Верхняя таблица - информация об участке -->
+            <table width="100%">
+                <tr>
+                    <td width="30%" height="35">
+                        Номер участка и очередь
+                    </td>
+                    <td>
+                        <strong>{*allotment.name*}</strong>
+                        ({*allotment.pipeline*})
+                    </td>
+                </tr>
+                <tr>
+                    <td height="35">
+                        Ф.И.О. владельца участка
+                    </td>
+                    <td>
+                        <strong>{*allotment.owner*}</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="35">
+                        Доступ к участку
+                    </td>
+                    <td>
+                        <input
+                                class="switcher_owner_status"
+                                id="checkbox_owner_status"
+                                type="checkbox"
+                                {?*allotment.status="1"*} checked="checked" {?}
+                                tabindex="3"
+                                name="status"
+                        >
+                        <label for="checkbox_owner_status"
+                               data-text-true="РАЗРЕШЕН"
+                               data-text-false="ОГРАНИЧЕН"><i></i></label>
+                    </td>
+                </tr>
+            </table>
+            <!-- Конец: Верхняя таблица - информация об участке -->
+        </td>
+    </tr>
+    <tr class="tr-td-align-center">
+        <th width="30%"><h3>Телефоны</h3></th>
+        <th width="40%"><h3>Постоянные пропуска</h3></th>
+        <th><h3>Временные пропуска</h3></th>
+    </tr>
+    <tr valign="top">
+        <td width="30%">
+            <!-- Таблица телефонов -->
+            <ul class="bulletless" id="container-phones">
+                <li>
+                    <label for="input-add-phone">
+                        <input type="text"
+                               width="40"
+                               placeholder="Телефон"
+                               id="input-add-phone">
+                        <button id="actor-add-phone">Добавить</button>
+                    </label>
+                </li>
+                {%*phones*}
+                <li data-id="{*phones:id*}">
+                    <input type="text" width="40" data-id="{*phones:id*}" value="{*phones:phone_number*}" disabled>
+                    <button class="action-delete-phone" data-id="{*phones:id*}">DELETE</button>
+                </li>
+                {%}
 
-        <tr>
-            <td>
-                Номер участка
-            </td>
-            <td>
-                <strong>{*allotment.name*}</strong>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Ф.И.О. Владельца участка
-            </td>
-            <td>
-                <strong>{*allotment.owner*}</strong>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Доступ
-            </td>
-            <td>
-                <input
-                        class="switcher_owner_status"
-                        id="checkbox_owner_status"
-                        type="checkbox"
-                        {?*allotment.status="1"*} checked="checked" {?}
-                        tabindex="3"
-                        name="status"
-                >
-                <label for="checkbox_owner_status"
-                       data-text-true="РАЗРЕШЕН"
-                       data-text-false="ОГРАНИЧЕН"><i></i></label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <hr>
-            </td>
-        </tr>
-        <tr class="align-center">
-            <td>
-                <button class="action-backward" tabindex="6" data-url="/places">К СПИСКУ УЧАСТКОВ</button>
-            </td>
-            <td>
-                <input type="submit" value="ОБНОВИТЬ ИНФОРМАЦИЮ" tabindex="5">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <button type="button" value="УДАЛИТЬ УЧАСТОК" class="action-allotment-delete">УДАЛИТЬ</button>
-            </td>
-        </tr>
+            </ul>
 
-    </table>
-</form>
+        </td>
+        <td width="40%">
+            <!-- Таблица ПОСТОЯННЫХ пропусков на авто -->
+            <ul class="bulletless" id="container-transport">
+                <li>
+                    <label for="input-add-transport">
+                        <input type="text"
+                               width="60"
+                               placeholder="Номер транспортного средства"
+                               id="input-add-transport">
+                        <button id="actor-add-transport">Добавить</button>
+                    </label>
+                </li>
+                {%*transport_permanent*}
+                <li data-id="{*transport_permanent:id*}">
+                    <input type="text" width="60" data-id="{*transport_permanent:id*}" value="{*transport_permanent:transport_number*}" disabled>
+                    <button class="action-delete-transport" data-id="{*transport_permanent:id*}">DELETE</button>
+                </li>
+                {%}
+            </ul>
+
+
+        </td>
+        <td width="30%">
+            <!-- список временных пропусков (просто для справки) -->
+        </td>
+    </tr>
+
+
+</table>
 
 </body>
 </html>

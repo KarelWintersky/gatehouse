@@ -43,9 +43,11 @@ class Allotment
         $data_phones = (new PhoneUnit())->getAll();
         $data_transport = (new TransportUnit())->getAll();
 
+        // разделяем $data_transport на два массива по признаку
+
         $t->set('allotment', $data_allotment);
         $t->set('phones', $data_phones);
-        $t->set('transport', $data_transport);
+        $t->set('transport_permanent', $data_transport);
 
         return $t->render();
     }
