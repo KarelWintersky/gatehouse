@@ -11,7 +11,7 @@
 <body>
 <button class="action-backward" tabindex="6" data-url="/places">К СПИСКУ УЧАСТКОВ</button>
 <input type="hidden" name="allotment_hidden_id" value="{*allotment.id*}" id="allotment_hidden_id">
-<table border="1" width="100%">
+<table border="0" width="100%">
     <tr>
         <td colspan="3"  style="font-size: large">
             <!-- Верхняя таблица - информация об участке -->
@@ -102,21 +102,29 @@
                 {%}
             </ul>
         </td>
-        <td width="30%">
-            <ul class="bulletless">
+        <td width="40%">
+            <!-- список временных пропусков (просто для справки) -->
+            <table width="100%" border="1">
+                <tr>
+                    <th>№</th>
+                    <th>Истекает</th>
+                </tr>
                 {?* transport_temporary^COUNT *}
-
                 {%*transport_temporary*}
-                <li>
-                    <input type="text" width="40" disabled value="{*transport_temporary:transport_number*}">
-                    <input type="text" width="20" disabled value="{*transport_temporary:pass_expiration*}">
-                </li>
+                <tr>
+                    <td>{*transport_temporary:transport_number*}</td>
+                    <td>{*transport_temporary:pass_expiration*}</td>
+                </tr>
                 {%}
                 {?!}
-                Записей нет
+                <tr>
+                    <td colspan="2">
+                        Нет временных пропусков
+                    </td>
+                </tr>
                 {?}
-            </ul>
-            <!-- список временных пропусков (просто для справки) -->
+            </table>
+
         </td>
     </tr>
 

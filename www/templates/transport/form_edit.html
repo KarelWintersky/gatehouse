@@ -3,11 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Редактирование транспортного средства № {*transport.transport_number*}</title>
-    <style type="text/css">
-        tr.align-center td {
-            text-align: center;
-        }
-    </style>
     <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="/frontend/jquery/jquery-ui.min.js"></script>
     <script type="text/javascript" src="/frontend/scripts.js"></script>
@@ -17,6 +12,9 @@
     <script type="text/javascript">
         var transport_id = {*transport.id*};
         var unlimited_status = {?*transport.is_pass_unlimited*} true {?!} false {?};
+        var now = new Date();
+        var eDay = (now.getDate() < 10) ? '0' + now.getDate() : now.getDate();
+        var eMonth = (now.getMonth() < 10) ? '0' + (1 + now.getMonth()) : (1 + now.getMonth());
 
         $(document).ready(function () {
             $(".form-manage-datepicker").datepicker({

@@ -3,11 +3,12 @@
 
 namespace Gatehouse\Controllers;
 
-
+use Gatehouse\AbstractUnit;
 use Gatehouse\Units\AjaxUnit;
 use Gatehouse\Units\PhoneUnit;
+use Gatehouse\Units\TransportUnit;
 
-class Ajax
+class Ajax extends AbstractUnit
 {
     private $unit_instance;
 
@@ -17,9 +18,13 @@ class Ajax
     }
     public function __invoke()
     {
-        return json_encode(['success' => 0, "error" =>  __METHOD__ . ' not implemented yet' ]);
+        return json_encode(['error' => 0, "errorMsg" =>  __METHOD__ . ' not implemented yet' ]);
     }
 
+    /**
+     * +
+     * @return false|string
+     */
     public function action_phone_add()
     {
         $dataset = [
@@ -27,26 +32,58 @@ class Ajax
             'id_allotment' => $_REQUEST['id_allotment']
         ];
 
-        $result = (new PhoneUnit())->insert($dataset);
+        $json = (new PhoneUnit())->insert($dataset);
 
-        return json_encode($result);
+        return json_encode($json);
     }
 
+    /**
+     * +
+     * @return false|string
+     */
     public function action_phone_delete()
     {
-        $result = (new PhoneUnit())->deleteByID($_REQUEST['phone_id']);
-        return json_encode($result);
+        $json = (new PhoneUnit())->deleteByID($_REQUEST['phone_id']);
+        return json_encode($json);
     }
 
-
+    /**
+     *
+     *
+     * @return false|string
+     * @throws \Exception
+     */
     public function action_transport_add()
     {
-        return json_encode(['success' => 0, "error" =>  __METHOD__ . ' not implemented yet' ]);
+        $dataset = [
+            'id_allotment'      =>  $_REQUEST['id_allotment'],
+            'transport_number'  =>  $_REQUEST['transport_number'],
+            'pass_unlimited'    =>  1,
+            'pass_expiration'   =>  (new \DateTime('+100 years'))->format('Y-m-d'),
+            'phone_number_temp' =>  ''
+        ];
+
+        $json = (new TransportUnit())->insert($dataset);
+
+        if ($json['error'] == 0) {
+            $json['id'] = $json['result'];
+            $json['transport_number'] = $dataset['transport_number'];
+        }
+
+        return json_encode($json);
     }
 
     public function action_transport_delete()
     {
-        return json_encode(['success' => 0, "error" =>  __METHOD__ . ' not implemented yet' ]);
+        $id = $_REQUEST['transport_id'];
+
+        $json = (new TransportUnit())->delete($id);
+
+        if ($json['error'] == 0) {
+            $json['transport_id'] = $id;
+        }
+
+        return json_encode($json);
     }
 
 }

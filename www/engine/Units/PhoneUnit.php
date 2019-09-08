@@ -41,26 +41,25 @@ class PhoneUnit extends AbstractUnit
     {
         $query = " INSERT INTO phones (`id_allotment`, `phone_number`) VALUES (:id_allotment, :phone_number) ";
 
-        $result = [
-            'success'       =>  0,
-            'error'         =>  'Unknown error',
+        $result = self::initResponse([
             'id_allotment'  =>  $dataset['id_allotment'],
             'id_phone'      =>  NULL,
             'phone_number'  =>  $dataset['phone_number']
-        ];
+        ]);
 
         try {
             $sth = DBC()->prepare($query);
             $sth->execute($dataset);
 
             $result['id_phone'] = DBC()->lastInsertId();
-            $result['success'] = 1;
+            $result['error'] = 0;
 
         } catch (\PDOException $e) {
+            $result['error'] = $e->getCode();
+            $result['errorMsg'] = $e->getMessage();
+
             if ($e->errorInfo[1] == self::MYSQL_ERROR_DUPLICATE_ENTRY) {
-                $result['error'] = '1062';
-            } else {
-                $result['error'] = $e->getMessage();
+                $result['error'] = 1062;
             }
         }
 
@@ -75,20 +74,18 @@ class PhoneUnit extends AbstractUnit
      */
     public function deleteByID($id)
     {
-        $result = [
-            'error'     =>  'Unknown',
-            'success'   =>  0
-        ];
+        $result = self::initResponse();
 
-        $query = "DELETE FROM phones WHERE id = :id ";
+        $query = " DELETE FROM phones WHERE id = :id ";
         try {
             $sth = DBC()->prepare($query);
             $sth->execute([ 'id' => $id ]);
 
-            $result['success'] = 1;
+            $result['error'] = 0;
 
         } catch (\PDOException $e) {
-            $result['error'] = $e->getMessage();
+            $result['error']    = $e->getCode();
+            $result['errorMsg'] = $e->getMessage();
         }
 
         return $result;

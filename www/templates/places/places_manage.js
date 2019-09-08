@@ -26,23 +26,23 @@ $(document).ready(function () {
                 phone_number:   $input_add_phone.val()
             },
             dataType: 'json'
-        }).done(function (data) {
-            if (data.success == 1) {
+        }).done(function (response) {
+            if (response.error == 0) {
                 $input_add_phone.val('');
 
                 $('#container-phones').append(`
-                    <li data-id="${data.id}">
-                        <input type="text" size="18" data-id="${data.id}" value="${data.phone_number}" disabled>
-                        <button class="action-delete-phone" data-id="${data.id}">DELETE</button>
+                    <li data-id="${response.id_phone}">
+                        <input type="text" size="18" data-id="${response.id_phone}" value="${response.phone_number}" disabled>
+                        <button class="action-delete-phone" data-id="${response.id_phone}">DELETE</button>
                     </li>
                 `);
             } else {
-                if (data['error'] == 1062) {
+                if (response.error == 1062) {
                     // это дубль
                     console.log('Duplicate phone');
                     alert('Номер не добавлен. Он уже зарегистрирован на этом участке');
                 } else {
-                    console.log( data.error );
+                    console.log( response.errorMsg );
                     // это неизвестно что
                 }
             }
@@ -52,6 +52,11 @@ $(document).ready(function () {
     // обработчик эктора "удалить номер телефона"
     $(document).on('click', '.action-delete-phone', function () {
         var phone_id = $(this).data('id');
+
+        if (!confirm('Действительно удалить телефонный номер?')) {
+            return false;
+        }
+
         $.ajax({
             url: '/ajax/delete_phone',
             data: {
@@ -59,17 +64,17 @@ $(document).ready(function () {
             },
             dataType: 'json'
         }).done(function (data) {
-            if (data.success == 1) {
+            if (data.error == 0) {
                 $(`#container-phones li[data-id="${phone_id}"]`).remove();
             } else {
-                alert(data.error);
+                alert(data.errorMsg);
             }
         });
     });
 
     // ==========================================================
 
-    // обработчик эктора "Добавить номер телефона"
+    // обработчик эктора "Добавить номер автомашины"
     $("#actor-add-transport").on('click', function () {
         var $input_add_transport = $('#input-add-transport');
 
@@ -86,7 +91,7 @@ $(document).ready(function () {
             },
             dataType: 'json'
         }).done(function (data) {
-            if (data.success == 1) {
+            if (data.error == 0) {
                 $input_add_transport.val('');
 
                 $('#container-transport').append(`
@@ -96,12 +101,12 @@ $(document).ready(function () {
                     </li>
                 `);
             } else {
+                console.log(data.errorMsg);
+
                 if (data['error'] == 1062) {
                     // это дубль
-                    console.log('Duplicate transport');
                     alert('Номер не добавлен. Он уже зарегистрирован на этом участке');
                 } else {
-                    console.log( data.error );
                     // это неизвестно что
                 }
             }
@@ -111,6 +116,11 @@ $(document).ready(function () {
     // обработчик эктора "удалить номер телефона"
     $(document).on('click', '.action-delete-transport', function () {
         var transport_id = $(this).data('id');
+
+        if (!confirm('Действительно удалить транспортное средство?')) {
+            return false;
+        }
+
         $.ajax({
             url: '/ajax/delete_transport',
             data: {
@@ -118,10 +128,10 @@ $(document).ready(function () {
             },
             dataType: 'json'
         }).done(function (data) {
-            if (data.success == 1) {
-                $(`#container-phones li[data-id="${transport_id}"]`).remove();
+            if (data.error == 0) {
+                $(`#container-transport li[data-id="${transport_id}"]`).remove();
             } else {
-                alert(data.error);
+                alert(data.errorMsg);
             }
         });
     });

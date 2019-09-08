@@ -20,11 +20,6 @@ class Transport
         $this->url_page_list = '/transport';
     }
 
-    public function __invoke()
-    {
-        return __METHOD__;
-    }
-
     /**
      * ==========================================
      */
@@ -90,7 +85,7 @@ class Transport
             'phone_number_temp'     =>  $_REQUEST['phone_number_temp']
         ];
 
-        $insert_status = $this->unit_instance->insert($dataset);
+        $insert_status = $this->unit_instance->insert($dataset)['result'];
 
         //@todo: if false - set SESSION value
 

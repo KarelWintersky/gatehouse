@@ -75,10 +75,12 @@ WHERE t.id_allotment = a.id AND a.pipeline = p.id AND t.id = :id
      * Вставка нового транспортного средства
      *
      * @param array $dataset
-     * @return string|null
+     * @return array
      */
     public function insert(array $dataset)
     {
+        $response = self::initResponse();
+
         $query = "
 INSERT INTO transport 
 (`id_allotment`, `transport_number`, `pass_unlimited`, `pass_expiration`, `phone_number_temp`) VALUES
@@ -88,15 +90,21 @@ INSERT INTO transport
         try {
             $sth = DBC()->prepare($query);
             $sth->execute($dataset);
+
+            $response['result'] = DBC()->lastInsertId();
+
+            $response['error'] = 0;
+
         } catch (\PDOException $e) {
+            $response['error'] = $e->getCode();
+            $response['errorMsg'] = $e->getMessage();
+
             if ($e->errorInfo[1] == self::MYSQL_ERROR_DUPLICATE_ENTRY) {
-                return NULL;
-            } else {
-                dd($e);
+                $response['error'] = self::MYSQL_ERROR_DUPLICATE_ENTRY;
             }
         }
 
-        return DBC()->lastInsertId();
+        return $response;
     }
 
     /**
@@ -132,10 +140,12 @@ WHERE
      * Удаление записи о транспортном средстве по ID
      *
      * @param $id
-     * @return bool
+     * @return array
      */
     public function delete($id)
     {
+        $result = self::initResponse();
+
         $query = " DELETE FROM transport WHERE id = :id ";
 
         try {
@@ -143,11 +153,14 @@ WHERE
             $sth->execute([
                 'id'    =>  $id
             ]);
+            $result['error'] = 0;
+
         } catch (\PDOException $e) {
-            dd($e);
-            return false;
+            $result['error'] = $e->getCode();
+            $result['errorMsg'] = $e->getMessage();
         }
-        return true;
+
+        return $result;
     }
 
 }
