@@ -35,6 +35,9 @@ SimpleRouter::group([
     SimpleRouter::get('/', 'Allotment@page_list');
     SimpleRouter::get('/add', 'Allotment@form_add');
     SimpleRouter::get('/edit', 'Allotment@form_edit');
+
+    SimpleRouter::get('/manage', 'Allotments@form_manage');
+
     SimpleRouter::post('/callback_add', 'Allotment@callback_add');
     SimpleRouter::post('/callback_edit', 'Allotment@callback_edit');
     SimpleRouter::get('/callback_delete', 'Allotment@callback_delete');

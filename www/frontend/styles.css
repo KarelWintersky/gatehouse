@@ -1,12 +1,78 @@
 .align-center {
     text-align: center;
 }
+
 .tr-td-align-center td {
     text-align: center;
 }
+.align-center td {
+    text-align: center;
+}
+
 .status_allowed {
     color: #67B04F;
 }
 .status_restricted {
     color: #DB574D;
+}
+
+/* Стили для свитчера "Статус владельца */
+input.switcher_owner_status[type=checkbox] {
+    display: none;
+}
+
+input.switcher_owner_status[type=checkbox] + label {
+    display: inline-block;
+    background-color: #DB574D;
+    color: white;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    height: 30px;
+    line-height: 30px;
+    position: relative;
+    text-transform: uppercase;
+    width: 280px;
+}
+
+input.switcher_owner_status[type=checkbox] + label,
+input.switcher_owner_status[type=checkbox] + label i {
+    -webkit-transition: all 200ms ease;
+    -moz-transition: all 200ms ease;
+    -o-transition: all 200ms ease;
+    transition: all 200ms ease;
+}
+
+input.switcher_owner_status[type=checkbox]:checked + label {
+    background-color: #67B04F;
+}
+
+input.switcher_owner_status[type=checkbox] + label:before,
+input.switcher_owner_status[type=checkbox] + label:after,
+input.switcher_owner_status[type=checkbox] + label i {
+    width: 50%;
+    display: inline-block;
+    height: 100%;
+    text-align: center;
+}
+
+input.switcher_owner_status[type=checkbox] + label:before {
+    content: attr(data-text-true);
+}
+
+input.switcher_owner_status[type=checkbox] + label:after {
+    content: attr(data-text-false);
+}
+
+input.switcher_owner_status[type=checkbox] + label i {
+    top: 10%;
+    background-color: white;
+    height: 80%;
+    left: 5%;
+    position: absolute;
+    width: 45%;
+}
+
+input.switcher_owner_status[type=checkbox]:checked + label i {
+    left: 50%;
 }

@@ -5,7 +5,9 @@ namespace Gatehouse\Controllers;
 
 use Arris\Template;
 use Gatehouse\Units\AllotmentUnit;
+use Gatehouse\Units\PhonesUnit;
 use Gatehouse\Units\PipelinesUnit;
+use Gatehouse\Units\TransportUnit;
 
 class Allotment
 {
@@ -28,6 +30,22 @@ class Allotment
     /**
      * ==========================================
      */
+    public function page_manage()
+    {
+        $t = new Template('manage.html', $this->template_path);
+        $id = intval($_REQUEST['id']);
+        $data_allotment = $this->unit_instance->get($id);
+        $data_phones = (new PhonesUnit())->getAll();
+        $data_transport = (new TransportUnit())->getAll();
+
+        $t->set('allotment', $data_allotment);
+        $t->set('phones', $data_phones);
+        $t->set('transport', $data_transport);
+
+        return $t->render();
+    }
+
+
 
     public function page_list()
     {
