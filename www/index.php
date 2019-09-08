@@ -34,6 +34,9 @@ try {
     SimpleRouter::group(['prefix' => '/ajax'], function (){
         SimpleRouter::get('/add_phone', 'Ajax@action_phone_add');
         SimpleRouter::get('/delete_phone', 'Ajax@action_phone_delete');
+
+        SimpleRouter::get('/add_transport', 'Ajax@action_transport_add');
+        SimpleRouter::get('/delete_transport', 'Ajax@action_transport_delete');
     });
 
     SimpleRouter::group([

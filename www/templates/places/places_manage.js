@@ -69,6 +69,63 @@ $(document).ready(function () {
 
     // ==========================================================
 
+    // обработчик эктора "Добавить номер телефона"
+    $("#actor-add-transport").on('click', function () {
+        var $input_add_transport = $('#input-add-transport');
 
+        if ($input_add_transport.val().trim() == '') {
+            $input_add_transport.val('');
+            return;
+        }
+
+        $.ajax({
+            url: '/ajax/add_transport',
+            data: {
+                id_allotment:       $("#allotment_hidden_id").val(),
+                transport_number:   $input_add_transport.val()
+            },
+            dataType: 'json'
+        }).done(function (data) {
+            if (data.success == 1) {
+                $input_add_transport.val('');
+
+                $('#container-transport').append(`
+                    <li data-id="${data.id}">
+                        <input type="text" size="18" data-id="${data.id}" value="${data.transport_number}" disabled>
+                        <button class="action-delete-transport" data-id="${data.id}">DELETE</button>
+                    </li>
+                `);
+            } else {
+                if (data['error'] == 1062) {
+                    // это дубль
+                    console.log('Duplicate transport');
+                    alert('Номер не добавлен. Он уже зарегистрирован на этом участке');
+                } else {
+                    console.log( data.error );
+                    // это неизвестно что
+                }
+            }
+        });
+    });
+
+    // обработчик эктора "удалить номер телефона"
+    $(document).on('click', '.action-delete-transport', function () {
+        var transport_id = $(this).data('id');
+        $.ajax({
+            url: '/ajax/delete_transport',
+            data: {
+                transport_id: transport_id
+            },
+            dataType: 'json'
+        }).done(function (data) {
+            if (data.success == 1) {
+                $(`#container-phones li[data-id="${transport_id}"]`).remove();
+            } else {
+                alert(data.error);
+            }
+        });
+    });
+
+    //
 
 });
