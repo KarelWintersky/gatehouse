@@ -1,3 +1,4 @@
+/* Стили выравнивания */
 .align-center {
     text-align: center;
 }
@@ -9,11 +10,27 @@
     text-align: center;
 }
 
+/* Цвета */
 .status_allowed {
     color: #67B04F;
 }
 .status_restricted {
     color: #DB574D;
+}
+
+/* Стили списков */
+.bulletless {
+    list-style-type: none;
+}
+
+#container-phones, #container-transport li {
+    margin: 5px 0 5px 0;
+}
+
+/* INPUT, в который что-то введено (плейсходер не показывается) И который disabled (ввод запрещен)  */
+li input:disabled:not(:placeholder-shown) {
+    font-weight: bold;
+    color: red;
 }
 
 /* Стили для свитчера "Статус владельца */
@@ -76,3 +93,5 @@ input.switcher_owner_status[type=checkbox] + label i {
 input.switcher_owner_status[type=checkbox]:checked + label i {
     left: 50%;
 }
+
+/* */
