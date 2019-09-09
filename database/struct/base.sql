@@ -41,6 +41,6 @@ CREATE TABLE `phones` (
     `id_allotment` int(11) DEFAULT NULL COMMENT '-> allotment.id',
     `phone_number` varchar(100) DEFAULT NULL COMMENT 'номер телефона',
     PRIMARY KEY (`id`),
-    UNIQUE KEY `unique_phonenumber` (`id_allotment`,`phone_number`)
+    UNIQUE KEY `unique_phonenumber` (`phone_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT 'Таблица телефонных номеров, привязанных к участкам';
 
