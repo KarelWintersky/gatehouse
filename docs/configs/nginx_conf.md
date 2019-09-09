@@ -1,3 +1,14 @@
+# Конфиг дается для Debian/Ubuntu
+
+В RedHat пути могут быть другими
+
+`/etc/nginx/conf.d/upstream=php-7.2.conf`
+```
+upstream php-handler-7-2 {
+    server unix:/var/run/php/php7.2-fpm.sock;
+}
+```
+
 ```
 server {
     listen              80;
