@@ -163,4 +163,31 @@ WHERE
         return $result;
     }
 
+    /**
+     * @param $transport_number
+     * @return array
+     */
+    public function isExist($transport_number)
+    {
+        $result = self::initResponse();
+
+        $query = " SELECT COUNT(*) FROM transport WHERE transport_number = :transport_number AND pass_unlimited = 1 ";
+
+        try {
+            $sth = DBC()->prepare($query);
+            $sth->execute([
+                'transport_number'  =>  $transport_number
+            ]);
+
+            $result['count'] = $sth->fetchColumn();
+            $result['error'] = 0;
+
+        } catch (\PDOException $e) {
+            $result['error'] = $e->getCode();
+            $result['errorMsg'] = $e->getMessage();
+        }
+
+        return $result;
+    }
+
 }

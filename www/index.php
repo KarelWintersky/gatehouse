@@ -41,10 +41,7 @@ try {
     });
 
 
-
-    SimpleRouter::group([
-        'prefix'    =>  '/places'
-    ], function () {
+    SimpleRouter::group(['prefix' => '/places'], function () {
         SimpleRouter::get('/', 'Allotment@page_list');
         SimpleRouter::get('/add', 'Allotment@form_add');
         SimpleRouter::get('/edit', 'Allotment@form_edit');
@@ -56,22 +53,22 @@ try {
         SimpleRouter::get('/callback_delete', 'Allotment@callback_delete');
     });
 
-    SimpleRouter::group([
-        'prefix'    =>  '/transport'
-    ], function () {
+    SimpleRouter::group(['prefix' => '/transport' ], function () {
         SimpleRouter::get('/', 'Transport@page_list');
+
         SimpleRouter::get('/add', 'Transport@form_add');
         SimpleRouter::get('/edit', 'Transport@form_edit');
+
         SimpleRouter::post('/callback_add', 'Transport@callback_add');
         SimpleRouter::post('/callback_edit', 'Transport@callback_edit');
         SimpleRouter::get('/callback_delete', 'Transport@callback_delete');
     });
 
-/*    SimpleRouter::error(function (Pecee\Http\Request $request, \Exception $exception){
+    SimpleRouter::error(function (Pecee\Http\Request $request, \Exception $exception){
         d($exception);
         d($request);
         dd('');
-    });*/
+    });
 
     SimpleRouter::start();
 

@@ -63,11 +63,22 @@ class Ajax extends AbstractUnit
             'phone_number_temp' =>  ''
         ];
 
-        $json = (new TransportUnit())->insert($dataset);
+        $_transport = new TransportUnit();
 
-        if ($json['error'] == 0) {
-            $json['id'] = $json['result'];
-            $json['transport_number'] = $dataset['transport_number'];
+        $transport_is_exists = ($_transport->isExist($dataset['transport_number']));
+
+        if ($transport_is_exists['error'] == 0 and $transport_is_exists['count'] > 0) {
+            // transport number NOT duplicate with unlimited pass
+            $json['error'] = 1062;
+            $json['errorMsg'] = 'Duplicate phone';
+            return json_encode($json);
+        } else {
+            $json = $_transport->insert($dataset);
+
+            if ($json['error'] == 0) {
+                $json['id'] = $json['result'];
+                $json['transport_number'] = $dataset['transport_number'];
+            }
         }
 
         return json_encode($json);
