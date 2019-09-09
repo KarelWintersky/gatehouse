@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Добавление транспортного средства</title>
+    {* + ../_copyright.html *}
+    {* + ../_favicons.html *}
     <link rel="stylesheet" href="/frontend/styles.css">
-    <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="/frontend/jquery/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/frontend/scripts.js"></script>
-    <script type="text/javascript" src="/frontend/datepicker/jquery.datepicker.js"></script>
     <link rel="stylesheet" media="screen" href="/frontend/jquery/jquery-ui.min.css">
     <link rel="stylesheet" media="screen" href="/frontend/datepicker/jquery.datepicker.css" type="text/css" />
+
+    <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/frontend/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/frontend/datepicker/jquery.datepicker.js"></script>
+    <script type="text/javascript" src="/frontend/scripts.js"></script>
+
     <script type="text/javascript">
         var transport_id = -1;
         var unlimited_status = true;
@@ -111,7 +115,7 @@
         </tr>
         <tr class="align-center">
             <td>
-                <button class="action-backward" data-url="/transport" tabindex="6">НАЗАД</button>
+                <button class="action-goto-url" data-url="/transport" tabindex="6">НАЗАД</button>
             </td>
             <td>
                 <input type="submit" value="ДОБАВИТЬ ТРАНСПОРТНОЕ СРЕДСТВО" tabindex="5">

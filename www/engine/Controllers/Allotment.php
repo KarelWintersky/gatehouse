@@ -38,11 +38,11 @@ class Allotment
     public function form_manage()
     {
         $t = new Template('form_manage.html', $this->template_path);
-        $id = intval($_REQUEST['id']);
+        $allotment_id = intval($_REQUEST['id']);
 
-        $data_allotment = $this->unit_instance->get($id);
-        $data_phones = (new PhoneUnit())->getAll();
-        $data_transport = (new TransportUnit())->getAll();
+        $data_allotment = $this->unit_instance->get($allotment_id);
+        $data_phones = (new PhoneUnit())->getAllForAllotment($allotment_id);
+        $data_transport = (new TransportUnit())->getAllForAllotment($allotment_id);
 
         // разделяем $data_transport на два массива по признаку
         $data_transport_permanent = [];
@@ -105,15 +105,13 @@ class Allotment
     public function callback_add()
     {
         $dataset = [
-            'pipeline'  =>  $_REQUEST['pipeline'],
-            'name'      =>  $_REQUEST['index'],
-            'owner'     =>  $_REQUEST['owner'],
-            'status'    =>  is_null(@$_REQUEST['status']) ? 'restricted' : 'allowed'
+            'id_pipeline'   =>  $_REQUEST['id_pipeline'],
+            'name'          =>  $_REQUEST['index'],
+            'owner'         =>  $_REQUEST['owner'],
+            'status'        =>  is_null(@$_REQUEST['status']) ? 'restricted' : 'allowed'
         ];
 
         $insert_status = $this->unit_instance->insert($dataset);
-
-        //@todo: if false - set SESSION value
 
         redirect('/');
     }

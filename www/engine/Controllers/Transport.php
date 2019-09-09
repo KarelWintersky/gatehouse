@@ -104,8 +104,6 @@ class Transport
 
         $update_status = $this->unit_instance->update($dataset);
 
-        //@todo: set session value
-
         redirect($this->url_page_list);
     }
 
@@ -114,8 +112,6 @@ class Transport
         $id = $_REQUEST['id'];
 
         $delete_status = $this->unit_instance->delete($id);
-
-        //@todo: set session value
 
         redirect($this->url_page_list);
     }

@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Список транспорта</title>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    {* + ../_copyright.html *}
+    {* + ../_favicons.html *}
     <link rel="stylesheet" href="/frontend/styles.css">
+    <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/frontend/scripts.js"></script>
+
     <script type="text/javascript">
         var urls = {
             'add':  '/transport/add',
@@ -12,12 +16,12 @@
             'list': '/transport'
         };
     </script>
-    <script type="text/javascript" src="/frontend/scripts.js"></script>
+
     <style type="text/css"></style>
 </head>
 <body>
-<button class="action-list-back" data-url="/">НАЗАД</button>
-<button class="action-list-add">ДОБАВИТЬ</button>
+<button class="action-goto-url" data-url="/">НАЗАД</button>
+<button class="action-goto-url" data-url="/transport/add">ДОБАВИТЬ</button>
 <table width="70%" border="1">
     <tr>
         <th>№ участка</th>
@@ -46,7 +50,7 @@
             {?}
         </td>
         <td>
-            <button data-id="{*transport_list:id*}" class="action-list-edit">Edit this</button>
+            <button data-id="{*transport_list:id*}" class="action-list-edit">РЕДАКТИРОВАТЬ</button>
         </td>
         {* <td> </td> *}
     </tr>

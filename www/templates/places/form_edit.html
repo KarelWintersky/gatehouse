@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Редактирование участка № {*allotment.id*}</title>
-    <link rel="stylesheet" href="/frontend/styles.css">
 
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+    {* + ../_copyright.html *}
+    {* + ../_favicons.html *}
+    <link rel="stylesheet" href="/frontend/styles.css">
+    <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/frontend/scripts.js"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".action-backward").on('click', function () {
-                window.location.href = $(this).data('url');
-                return false;
-            });
-
             $(".action-allotment-delete").on('click', function () {
                 if (confirm("Действительно удалить? Да/Нет")) {
                     window.location.href = '/places/callback_delete?id=' + $('#allotment_hidden_id').val();

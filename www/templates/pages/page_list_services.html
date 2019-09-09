@@ -3,15 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Другие действия</title>
+    {* + ../_copyright.html *}
+    {* + ../_favicons.html *}
+    <link rel="stylesheet" href="/frontend/styles.css">
+    <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/frontend/scripts.js"></script>
 </head>
 <body>
-<ul>
-    <li> <a href="/transport">Список транспортных средств</a> </li>
-    <li> <a href="/places/add">Добавить участок</a> </li>
-    <li> <a href=""></a> </li>
-    <li> <a href=""></a> </li>
-    <li> <a href=""></a> </li>
-
+<ul class="bulletless">
+    <li>
+        <button data-url="/transport/" class="action-goto-url xlarge">Список транспортных средств</button>
+    </li>
+    <li>
+        <button data-url="/places/add" class="action-goto-url xlarge">Добавить участок</button>
+    </li>
 </ul>
 
 

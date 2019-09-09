@@ -18,20 +18,33 @@ class TransportUnit extends AbstractUnit
     }
 
     /**
-     * Список всего транспорта
+     * Список транспорта для участка
+     *
+     * @param $allotment_id
+     * @return array
+     */
+    public function getAllForAllotment($allotment_id)
+    {
+        $query = "SELECT * FROM transport WHERE id_allotment = :aid";
+
+        $sth = DBC()->prepare($query);
+        $sth->execute([
+            'aid'   =>  $allotment_id
+        ]);
+
+        return $sth->fetchAll();
+    }
+
+    /**
+     * Список вообще всего всего транспорта
      */
     public function getAll()
     {
-        $query = "SELECT * FROM transport"; // WHERE ....
+        $query = "SELECT * FROM transport";
 
         $sth = DBC()->query($query);
 
-        $transport = [];
-        while ($row = $sth->fetch()) {
-            $transport[] = $row;
-        }
-
-        return $transport;
+        return $sth->fetchAll();
     }
 
     /**
@@ -52,7 +65,7 @@ SELECT
 	transport_number,
 	phone_number_temp
 FROM transport AS t, pipelines AS p, allotments AS a
-WHERE t.id_allotment = a.id AND a.pipeline = p.id AND t.id = :id
+WHERE t.id_allotment = a.id AND a.id_pipeline = p.id AND t.id = :id
         ";
 
         $transport = [];

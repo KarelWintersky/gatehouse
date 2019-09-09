@@ -1,10 +1,4 @@
 $(document).ready(function () {
-    // обработчик эктора "назад"
-    $(".action-backward").on('click', function () {
-        window.location.href = $(this).data('url');
-        return false;
-    });
-
     // обработчик эктора "изменить доступ к участку"
     $(".checkbox_owner_status").on('change', function () {
 
@@ -40,7 +34,7 @@ $(document).ready(function () {
                 if (response.error == 1062) {
                     // это дубль
                     console.log('Duplicate phone');
-                    alert('Номер не добавлен. Он уже зарегистрирован на этом участке');
+                    alert('Этот номер телефона уже где-то зарегистрирован (возможно здесь!)');
                 } else {
                     console.log( response.errorMsg );
                     // это неизвестно что
@@ -105,7 +99,7 @@ $(document).ready(function () {
 
                 if (data['error'] == 1062) {
                     // это дубль
-                    alert('Номер не добавлен. Он уже зарегистрирован на этом участке');
+                    alert('Этот автомобиль уже где-то зарегистрирован (возможно здесь!)');
                 } else {
                     // это неизвестно что
                 }

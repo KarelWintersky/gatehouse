@@ -14,7 +14,7 @@ class AllotmentUnit extends AbstractUnit
      */
     public function getAll()
     {
-        $query = "SELECT * FROM allotments"; // WHERE посёлок = N
+        $query = "SELECT * FROM allotments ORDER BY `id_pipeline`, `name` "; // WHERE посёлок = N
 
         $sth = DBC()->query($query);
 
@@ -38,7 +38,7 @@ SELECT a.id as id, p.name as pipeline, a.name as name, owner, IF(status = 'allow
 FROM 
      allotments AS a,
      pipelines AS p
-WHERE a.id = :id AND a.pipeline = p.id 
+WHERE a.id = :id AND a.id_pipeline = p.id 
 ";
         $allotment = [];
 
@@ -66,8 +66,8 @@ WHERE a.id = :id AND a.pipeline = p.id
     {
         $query = "
 INSERT INTO allotments 
-(`pipeline`, `name`, `owner`, `status`) VALUES
-(:pipeline,  :name,  :owner,  :status)
+(`id_pipeline`, `name`, `owner`, `status`) VALUES
+(:id_pipeline,  :name,  :owner,  :status)
         ";
 
         try {
@@ -111,22 +111,35 @@ WHERE `id` = :id
     /**
      * Удаляет по ID
      *
-     * @param $id
+     * @param $id_allotment
      * @return bool
      */
-    public function delete($id)
+    public function delete($id_allotment)
     {
-        $query = " DELETE FROM allotments WHERE id = :id ";
-
         try {
-            $sth = DBC()->prepare($query);
+            DBC()->beginTransaction();
+
+            $sth = DBC()->prepare("DELETE FROM phones WHERE id_allotment = :id_allotment ");
             $sth->execute([
-                'id'    =>  $id
+                'id_allotment'  =>  $id_allotment
             ]);
+
+            $sth = DBC()->prepare("DELETE FROM transport WHERE id_allotment = :id_allotment ");
+            $sth->execute([
+                'id_allotment'  =>  $id_allotment
+            ]);
+
+            $sth = DBC()->prepare("DELETE FROM allotments WHERE id = :id_allotment");
+            $sth->execute([
+                'id_allotment'  =>  $id_allotment
+            ]);
+
+            DBC()->commit();
         } catch (\PDOException $e) {
-            dd($e);
+            DBC()->rollBack();
             return false;
         }
+
         return true;
     }
 
@@ -136,11 +149,10 @@ WHERE `id` = :id
      */
     public function getAllForSelector()
     {
-        //@todo: отрефакторить на выборку чисто данных (p.name AS pipeline_name)
         $query = " SELECT a.id AS id, CONCAT(a.name, ' (', p.name, ')') as name
 FROM allotments as a, pipelines as p
-WHERE a.pipeline = p.id
-ORDER BY a.pipeline, a.name ";
+WHERE a.id_pipeline = p.id
+ORDER BY a.id_pipeline, a.name ";
 
         $list = [];
         try {

@@ -12,6 +12,28 @@ class PhoneUnit extends AbstractUnit
     {
     }
 
+    public function getAllForAllotment($allotment_id)
+    {
+        $query = "
+        SELECT 
+            p.id AS id,
+            a.name AS id_allotment,
+            phone_number
+        FROM
+            allotments AS a, phones AS p
+        WHERE 
+            a.id = p.id_allotment
+            AND p.id_allotment = :aid
+        ORDER BY p.id
+        ";
+        $sth = DBC()->prepare($query);
+        $sth->execute([
+            'aid'   =>  $allotment_id
+        ]);
+
+        return $sth->fetchAll();
+    }
+
     public function getAll()
     {
         $query = "

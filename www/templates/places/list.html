@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Список участков</title>
-    <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
+
+    {* + ../_copyright.html *}
+    {* + ../_favicons.html *}
     <link rel="stylesheet" href="/frontend/styles.css">
+    <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/frontend/scripts.js"></script>
+
     <script type="text/javascript">
         var urls = {
             'add':  '/places/add',
@@ -17,10 +22,6 @@
             });
         });
     </script>
-    <script type="text/javascript" src="/frontend/scripts.js"></script>
-    <style>
-
-    </style>
 </head>
 <body>
 
@@ -37,14 +38,14 @@
     {?*allotments_count*}
     {%*allotments_list*}
     <tr>
-        <td height="50" class="align-center">{*allotments_list:pipeline*}</td>
+        <td height="50" class="align-center">{*allotments_list:id_pipeline*}</td>
         <td class="align-center">{*allotments_list:name*}</td>
         <td>{*allotments_list:owner*}</td>
         <td class="align-center">
             {?*allotments_list:status = "allowed"*}
-            <strong class="status_allowed">{*allotments_list:status*}</strong>
+            <span class="block_owner_status block_owner_status_allowed">РАЗРЕШЕН</span>
             {?!}
-            <strong class="status_restricted">{*allotments_list:status*}</strong>
+            <span class="block_owner_status block_owner_status_restricted">ОГРАНИЧЕН</span>
             {?}
         </td>
         <th class="align-center">

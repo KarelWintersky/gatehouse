@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Редактирование транспортного средства № {*transport.transport_number*}</title>
-    <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="/frontend/jquery/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="/frontend/scripts.js"></script>
-    <script type="text/javascript" src="/frontend/datepicker/jquery.datepicker.js"></script>
+    {* + ../_copyright.html *}
+    {* + ../_favicons.html *}
+    <link rel="stylesheet" href="/frontend/styles.css">
     <link rel="stylesheet" media="screen" href="/frontend/jquery/jquery-ui.min.css">
     <link rel="stylesheet" media="screen" href="/frontend/datepicker/jquery.datepicker.css" type="text/css" />
+
+    <script type="text/javascript" src="/frontend/jquery/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="/frontend/jquery/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/frontend/datepicker/jquery.datepicker.js"></script>
+    <script type="text/javascript" src="/frontend/scripts.js"></script>
+
     <script type="text/javascript">
         var transport_id = {*transport.id*};
         var unlimited_status = {?*transport.is_pass_unlimited*} true {?!} false {?};
@@ -107,14 +112,14 @@
                 <input type="text"
                        name="phone_number_temp"
                        placeholder="Номер телефона"
-                       value=""
+                       value="{*transport.phone_number_temp*}"
                        size="40"
                 >
             </td>
         </tr>
         <tr class="align-center">
             <td>
-                <button class="action-backward" data-url="/transport" tabindex="6">НАЗАД</button>
+                <button class="action-goto-url" data-url="/transport" tabindex="6">НАЗАД</button>
             </td>
             <td>
                 <input type="submit" value="ОТРЕДАКТИРОВАТЬ ТРАНСПОРТНОЕ СРЕДСТВО" tabindex="5">
