@@ -64,11 +64,13 @@ try {
         SimpleRouter::get('/callback_delete', 'Transport@callback_delete');
     });
 
-    SimpleRouter::error(function (Pecee\Http\Request $request, \Exception $exception){
-        d($exception);
-        d($request);
-        dd('');
-    });
+    if (getenv('IS_DEBUG') == 1) {
+        SimpleRouter::error(function (Pecee\Http\Request $request, \Exception $exception){
+            d($exception);
+            d($request);
+            dd('');
+        });
+    }
 
     SimpleRouter::start();
 
