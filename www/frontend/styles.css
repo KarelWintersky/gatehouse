@@ -55,10 +55,21 @@ li input:disabled:not(:placeholder-shown) {
 }
 
 /* Buttons */
+input[type='submit'], button {
+    height: 30px;
+}
+
+
 button.xlarge {
     font-size: x-large;
     height: 80px;
 }
+
+/*
+.button-height-30 {
+    height: 30px;
+}
+*/
 
 /* Стили для свитчера "Статус владельца */
 input.switcher_owner_status[type=checkbox] {

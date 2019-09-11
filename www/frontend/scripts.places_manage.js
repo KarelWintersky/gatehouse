@@ -37,7 +37,7 @@ $(document).ready(function () {
                     alert('Этот номер телефона уже где-то зарегистрирован (возможно здесь!)');
                 } else {
                     console.log( response.errorMsg );
-                    // это неизвестно что
+                    alert('Неизвестная ошибка: ' + response.errorMsg);
                 }
             }
         });
@@ -91,7 +91,7 @@ $(document).ready(function () {
                 $('#container-transport').append(`
                     <li data-id="${data.id}">
                         <input type="text" size="18" data-id="${data.id}" value="${data.transport_number}" disabled>
-                        <button class="action-delete-transport" data-id="${data.id}">DELETE</button>
+                        <button class="action-delete-transport button-height-30" data-id="${data.id}">DELETE</button>
                     </li>
                 `);
             } else {

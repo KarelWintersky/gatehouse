@@ -1,8 +1,12 @@
--- townhouse
+-- ЭТО НАЧАЛЬНАЯ ИНИЦИАЛИЗАЦИЯ
+-- ИСПОЛЬЗОВАТЬ ЭТИ ОПРЕДЕЛЕНИЯ ТОЛЬКО ПРИ ДЕПЛОЕ НОВОГО ПРОЕКТА!!!!
+-- УДАЛЯЕТ ТАБЛИЦЫ ПЕРЕД ИХ СОЗДАНИЕМ
 
+-- townhouse
 -- pipelines
 -- очереди застройки (hardcoded)
 
+DROP TABLE `pipelines`;
 CREATE TABLE `pipelines` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `name` varchar(40) DEFAULT NULL COMMENT 'Название очереди',
@@ -14,6 +18,7 @@ CREATE TABLE `pipelines` (
 INSERT INTO pipelines (`name`, `id_townhouse`)
 VALUES ('Очередь 1', 1), ('Очередь 2-3', 1);
 
+DROP TABLE `allotments`;
 CREATE TABLE `allotments` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `id_pipeline` int(11) DEFAULT NULL COMMENT 'id очереди застройки участков',
@@ -25,6 +30,7 @@ CREATE TABLE `allotments` (
     KEY `id_pipeline` (`id_pipeline`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Таблица коттеджных участков';
 
+DROP TABLE `transport`;
 CREATE TABLE `transport` (
      `id` int(11) NOT NULL AUTO_INCREMENT,
      `id_allotment` int(11) DEFAULT NULL COMMENT '-> allotment.id',
@@ -36,6 +42,7 @@ CREATE TABLE `transport` (
      KEY `transport_transport_number` (`transport_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT 'Таблица транспортных средств';
 
+DROP TABLE `phones`;
 CREATE TABLE `phones` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `id_allotment` int(11) DEFAULT NULL COMMENT '-> allotment.id',
