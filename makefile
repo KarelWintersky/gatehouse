@@ -2,7 +2,7 @@
 
 SHELL = /bin/bash
 PROJECT  = "gatekeeper"
-VAR_ROOT = /var/www/$(PROJECT)
+TARGET = /var/www/$(PROJECT)
 WWW_ROOT = /var/www/$(PROJECT)/www
 
 help:   ##@help Help
@@ -19,11 +19,11 @@ update:         ##@update Update project from GIT and build version file
 	@echo Updated.
 
 build:          ##build Build DEB package
-	@cd www/ && composer install && rm composer.json && rm composer.lock
+	@cd www/ && composer install
 
-install:		##install Install project to working directory
-	install -d $(VAR_ROOT)
-	cp -r www $(VAR_ROOT)
+#install:		##install Install project to working directory
+#	install -d $(TARGET)
+#	cp -r www/* $(TARGET)/*
 
 
 # ------------------------------------------------
