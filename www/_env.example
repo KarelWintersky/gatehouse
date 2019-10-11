@@ -15,6 +15,10 @@ DB_USER         = "root"
 DB_PASS         = "password"
 DB_NAME         = "gatehouse"
 
+# CUSTOM_BEHAVIOR
+
+TRANSLATE_TRANSPORT_NUMBER = 1
+
 # DEBUG SETTINGS #
 
 IS_DEBUG        = 1

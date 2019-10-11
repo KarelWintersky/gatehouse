@@ -57,7 +57,7 @@ class Ajax extends AbstractUnit
     {
         $dataset = [
             'id_allotment'      =>  $_REQUEST['id_allotment'],
-            'transport_number'  =>  $_REQUEST['transport_number'],
+            'transport_number'  =>  translate_transport_number($_REQUEST['transport_number']),
             'pass_unlimited'    =>  1,
             'pass_expiration'   =>  (new \DateTime('+100 years'))->format('Y-m-d'),
             'phone_number_temp' =>  ''

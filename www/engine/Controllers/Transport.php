@@ -79,7 +79,7 @@ class Transport
     {
         $dataset = [
             'id_allotment'          =>  $_REQUEST['id_allotment'],
-            'transport_number'      =>  $_REQUEST['transport_number'],
+            'transport_number'      =>  translate_transport_number($_REQUEST['transport_number']),
             'pass_unlimited'        =>  is_null(@$_REQUEST['is_pass_unlimited']) ? 0 : 1,
             'pass_expiration'       =>  $_REQUEST['pass_expiration'],
             'phone_number_temp'     =>  $_REQUEST['phone_number_temp']

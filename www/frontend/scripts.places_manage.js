@@ -130,6 +130,14 @@ $(document).ready(function () {
         });
     });
 
-    //
+    // input mask на номер транспортного средства (0-9, латиница)
+    // не используется, потому что в инпут могут копипастить номер с русскими буквами,
+    // которые плагином не допускаются
+    // требует <script type="text/javascript" src="/frontend/jquery/jquery.inputmask.min.js"></script>
+    // в www/templates/places/form_manage.html
+    /*$("#input-add-transport").inputmask({
+        regex: "[0-9A-Z\-]*",
+        placeholder: "Номер транспортного средства"
+    });*/
 
 });
