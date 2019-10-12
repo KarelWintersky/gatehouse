@@ -65,7 +65,7 @@ class Ajax extends AbstractUnit
 
         $_transport = new TransportUnit();
 
-        $transport_is_exists = ($_transport->isExist($dataset['transport_number']));
+        $transport_is_exists = ($_transport->isExist($dataset['transport_number'], $dataset['id_allotment']));
 
         if ($transport_is_exists['error'] == 0 and $transport_is_exists['count'] > 0) {
             // transport number NOT duplicate with unlimited pass

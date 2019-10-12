@@ -22,9 +22,9 @@ if (!function_exists('translate_transport_number')) {
         // аналогично с верхним регистром
         // То что транслитерируется - транслитерировать заменой. И перевести все в UpperCase
         // Что не - оставить
-        $str = strtoupper($str);
+        $str = mb_strtoupper($str);
 
-        if (getenv('TRANSLATE_TRANSPORT_NUMBER') == 1) {
+        if (getenv('TRANSPORT_TRANSLATE_NUMBER') == 1) {
             $from   = [ 'А', 'В', 'Е', 'К', 'М', 'Н', 'О', 'Р', 'С', 'Т', 'У', 'Х']; // русские буквы
             $to     = [ 'A', 'B', 'E', 'K', 'M', 'H', 'O', 'P', 'C', 'T', 'Y', 'X']; // латинские буквы
 

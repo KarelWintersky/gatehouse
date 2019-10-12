@@ -17,7 +17,8 @@ DB_NAME         = "gatehouse"
 
 # CUSTOM_BEHAVIOR
 
-TRANSLATE_TRANSPORT_NUMBER = 1
+TRANSPORT_TRANSLATE_NUMBER = 1              # 1 если производить трансляцию номера в латиницу
+TRANSPORT_UNIQUE_AT_ALLOTMENT = 1           # 1 если транспорт уникален только в пределах участка, 0 - везде
 
 # DEBUG SETTINGS #
 

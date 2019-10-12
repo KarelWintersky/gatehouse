@@ -178,13 +178,18 @@ WHERE
 
     /**
      * @param $transport_number
+     * @param $id_allotment
      * @return array
      */
-    public function isExist($transport_number)
+    public function isExist($transport_number, $id_allotment)
     {
         $result = self::initResponse();
 
         $query = " SELECT COUNT(*) FROM transport WHERE transport_number = :transport_number AND pass_unlimited = 1 ";
+
+        if (getenv('TRANSPORT_UNIQUE_AT_ALLOTMENT') == 1) {
+            $query.= " AND id_allotment = {$id_allotment} ";
+        }
 
         try {
             $sth = DBC()->prepare($query);
