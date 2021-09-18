@@ -8,7 +8,7 @@
  * Date: 03.02.2018, time: 20:30
  */
 
-namespace Arris;
+namespace Gatehouse;
 
 class Template
 {
@@ -45,9 +45,13 @@ class Template
 
             return websun_parse_template_path( $this->template_data, $this->template_file, $this->template_path );
 
-        } elseif ($this->render_type === 'json') {
+        }
+
+        if ($this->render_type === 'json') {
             return json_encode( $this->template_data );
-        } else return null;
+        } else {
+            return null;
+        }
     }
 
     /**

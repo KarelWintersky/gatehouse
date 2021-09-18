@@ -3,7 +3,7 @@
 
 namespace Gatehouse\Controllers;
 
-use Arris\Template;
+use Gatehouse\Template;
 use Gatehouse\Units\AllotmentUnit;
 use Gatehouse\Units\PhoneUnit;
 use Gatehouse\Units\PipelineUnit;

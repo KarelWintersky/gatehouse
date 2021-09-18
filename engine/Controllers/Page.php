@@ -1,10 +1,8 @@
 <?php
 
-
 namespace Gatehouse\Controllers;
 
-
-use Arris\Template;
+use Gatehouse\Template;
 use Gatehouse\AbstractUnit;
 
 class Page

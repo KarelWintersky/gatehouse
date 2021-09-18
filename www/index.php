@@ -4,17 +4,20 @@
 
 setlocale(LC_CTYPE, 'ru_RU.UTF8');
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/vendor/pecee/simple-router/helpers.php';
-require_once __DIR__ . '/engine/websun.php';
-require_once __DIR__ . '/engine/Template.php';
-require_once __DIR__ . '/engine/functions.php';
-
-$dotenv = \Dotenv\Dotenv::create(__DIR__, '_env');
-$dotenv->load();
-
 use Arris\DB;
+use Dotenv\Dotenv;
 use Pecee\SimpleRouter\SimpleRouter;
+
+define('PATH_ROOT', dirname(__DIR__, 1));
+define('PATH_CONFIG', dirname(__DIR__, 1) . '/config/');
+
+require_once PATH_ROOT . '/vendor/autoload.php';
+require_once PATH_ROOT . '/vendor/pecee/simple-router/helpers.php';
+require_once PATH_ROOT . '/engine/websun.php';
+require_once PATH_ROOT . '/engine/Template.php';
+require_once PATH_ROOT . '/engine/functions.php';
+
+Dotenv::create(PATH_CONFIG, '_env')->load();
 
 try {
     DB::init(NULL, [
